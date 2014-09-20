@@ -23,25 +23,13 @@ RSpec.describe JourneysController, :type => :controller do
   # This should return the minimal set of attributes required to create a valid
   # Journey. As you add validations to Journey, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    {title: "A valid title", body: "A valid selection of body text"}
-  }
+  let(:valid_attributes) { {title: "A valid title", body: "A valid selection of body text"} }
 
-  let(:blank_title) {
-    {title: "", body: "A valid body"}
-  }
+  let(:blank_title) { {title: "", body: "A valid body"} }
+  let(:blank_body) { {title: "A valid title", body: ""} }
 
-  let(:blank_body) {
-    {title: "A valid title", body: ""}
-  }
-
-  let(:long_title) {
-    {title: "a" * 251, body: "A valid body"}
-  }
-
-  let(:long_body) {
-    {title: "A valid title", body: "a" * 10001}
-  }
+  let(:long_title) { {title: "a" * 251, body: "A valid body"} }
+  let(:long_body) { {title: "A valid title", body: "a" * 10001} }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -154,14 +142,14 @@ RSpec.describe JourneysController, :type => :controller do
         {title: "A new valid title", body: "A new valid selection of body text"}
       }
 
-      it "updates the requested journey" do
+      it "updates the title" do
         journey = Journey.create! valid_attributes
         put :update, {:id => journey.to_param, :journey => new_attributes}, valid_session
         journey.reload
         expect(journey.title).to eq(new_attributes[:title])
       end
 
-      it "updates the requested journey" do
+      it "updates the body" do
         journey = Journey.create! valid_attributes
         put :update, {:id => journey.to_param, :journey => new_attributes}, valid_session
         journey.reload

@@ -23,14 +23,14 @@ RSpec.describe EntriesController, :type => :controller do
   # This should return the minimal set of attributes required to create a valid
   # Entry. As you add validations to Entry, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let(:valid_attributes) { {title: "A valid title", body: "A valid body"} }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:blank_title) { {title: "", body: "An invalid body"} }
+  let(:blank_body) { {title: "An invalid title", body: ""} }
 
+  let(:long_title) { {title: "a" * 251, body: "A valid body"} }
+  let(:long_body) { {title: "A valid title", body: "a" * 10001} }
+  #
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # EntriesController. Be sure to keep this updated too.
@@ -87,14 +87,50 @@ RSpec.describe EntriesController, :type => :controller do
       end
     end
 
-    describe "with invalid params" do
+    describe "with long title" do
       it "assigns a newly created but unsaved entry as @entry" do
-        post :create, {:entry => invalid_attributes}, valid_session
+        post :create, {:entry => long_title}, valid_session
         expect(assigns(:entry)).to be_a_new(Entry)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:entry => invalid_attributes}, valid_session
+        post :create, {:entry => long_title}, valid_session
+        expect(response).to render_template("new")
+      end
+    end
+
+    describe "with long body" do
+      it "assigns a newly created but unsaved entry as @entry" do
+        post :create, {:entry => long_body}, valid_session
+        expect(assigns(:entry)).to be_a_new(Entry)
+      end
+
+      it "re-renders the 'new' template" do
+        post :create, {:entry => long_body}, valid_session
+        expect(response).to render_template("new")
+      end
+    end
+
+    describe "with blank title" do
+      it "assigns a newly created but unsaved entry as @entry" do
+        post :create, {:entry => blank_title}, valid_session
+        expect(assigns(:entry)).to be_a_new(Entry)
+      end
+
+      it "re-renders the 'new' template" do
+        post :create, {:entry => blank_title}, valid_session
+        expect(response).to render_template("new")
+      end
+    end
+
+    describe "with blank body" do
+      it "assigns a newly created but unsaved entry as @entry" do
+        post :create, {:entry => blank_body}, valid_session
+        expect(assigns(:entry)).to be_a_new(Entry)
+      end
+
+      it "re-renders the 'new' template" do
+        post :create, {:entry => blank_body}, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -103,14 +139,21 @@ RSpec.describe EntriesController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {title: "A new valid title", body: "A new valid body"}
       }
 
-      it "updates the requested entry" do
+      it "updates the title" do
         entry = Entry.create! valid_attributes
         put :update, {:id => entry.to_param, :entry => new_attributes}, valid_session
         entry.reload
-        skip("Add assertions for updated state")
+        expect(entry.title).to eq(new_attributes[:title])
+      end
+
+      it "updates the body" do
+        entry = Entry.create! valid_attributes
+        put :update, {:id => entry.to_param, :entry => new_attributes}, valid_session
+        entry.reload
+        expect(entry.body).to eq(new_attributes[:body])
       end
 
       it "assigns the requested entry as @entry" do
@@ -126,16 +169,58 @@ RSpec.describe EntriesController, :type => :controller do
       end
     end
 
-    describe "with invalid params" do
+    describe "with long title" do
       it "assigns the entry as @entry" do
         entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => invalid_attributes}, valid_session
+        put :update, {:id => entry.to_param, :entry => long_title}, valid_session
         expect(assigns(:entry)).to eq(entry)
       end
 
       it "re-renders the 'edit' template" do
         entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => invalid_attributes}, valid_session
+        put :update, {:id => entry.to_param, :entry => long_title}, valid_session
+        expect(response).to render_template("edit")
+      end
+    end
+
+    describe "with long title" do
+      it "assigns the entry as @entry" do
+        entry = Entry.create! valid_attributes
+        put :update, {:id => entry.to_param, :entry => long_body}, valid_session
+        expect(assigns(:entry)).to eq(entry)
+      end
+
+      it "re-renders the 'edit' template" do
+        entry = Entry.create! valid_attributes
+        put :update, {:id => entry.to_param, :entry => long_body}, valid_session
+        expect(response).to render_template("edit")
+      end
+    end
+    
+    describe "with blank title" do
+      it "assigns the entry as @entry" do
+        entry = Entry.create! valid_attributes
+        put :update, {:id => entry.to_param, :entry => blank_title}, valid_session
+        expect(assigns(:entry)).to eq(entry)
+      end
+
+      it "re-renders the 'edit' template" do
+        entry = Entry.create! valid_attributes
+        put :update, {:id => entry.to_param, :entry => blank_title}, valid_session
+        expect(response).to render_template("edit")
+      end
+    end
+
+    describe "with blank body" do
+      it "assigns the entry as @entry" do
+        entry = Entry.create! valid_attributes
+        put :update, {:id => entry.to_param, :entry => blank_body}, valid_session
+        expect(assigns(:entry)).to eq(entry)
+      end
+
+      it "re-renders the 'edit' template" do
+        entry = Entry.create! valid_attributes
+        put :update, {:id => entry.to_param, :entry => blank_body}, valid_session
         expect(response).to render_template("edit")
       end
     end

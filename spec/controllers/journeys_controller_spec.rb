@@ -23,13 +23,13 @@ RSpec.describe JourneysController, :type => :controller do
   # This should return the minimal set of attributes required to create a valid
   # Journey. As you add validations to Journey, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { {title: "A valid title", body: "A valid selection of body text"} }
+  let(:valid_attributes) { {title: "A valid title", description: "A valid selection of description text"} }
 
-  let(:blank_title) { {title: "", body: "A valid body"} }
-  let(:blank_body) { {title: "A valid title", body: ""} }
+  let(:blank_title) { {title: "", description: "A valid description"} }
+  let(:blank_description) { {title: "A valid title", description: ""} }
 
-  let(:long_title) { {title: "a" * 251, body: "A valid body"} }
-  let(:long_body) { {title: "A valid title", body: "a" * 10001} }
+  let(:long_title) { {title: "a" * 251, description: "A valid description"} }
+  let(:long_description) { {title: "A valid title", description: "a" * 10001} }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -99,14 +99,14 @@ RSpec.describe JourneysController, :type => :controller do
       end
     end
 
-    describe "with blank body" do
+    describe "with blank description" do
       it "assigns a newly created but unsaved journey as @journey" do
-        post :create, {:journey => blank_body}, valid_session
+        post :create, {:journey => blank_description}, valid_session
         expect(assigns(:journey)).to be_a_new(Journey)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:journey => blank_body}, valid_session
+        post :create, {:journey => blank_description}, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -123,14 +123,14 @@ RSpec.describe JourneysController, :type => :controller do
       end
     end
 
-    describe "with long body" do
+    describe "with long description" do
       it "assigns a newly created but unsaved journey as @journey" do
-        post :create, {:journey => long_body}, valid_session
+        post :create, {:journey => long_description}, valid_session
         expect(assigns(:journey)).to be_a_new(Journey)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:journey => long_body}, valid_session
+        post :create, {:journey => long_description}, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -139,7 +139,7 @@ RSpec.describe JourneysController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       let(:new_attributes) {
-        {title: "A new valid title", body: "A new valid selection of body text"}
+        {title: "A new valid title", description: "A new valid selection of description text"}
       }
 
       it "updates the title" do
@@ -149,11 +149,11 @@ RSpec.describe JourneysController, :type => :controller do
         expect(journey.title).to eq(new_attributes[:title])
       end
 
-      it "updates the body" do
+      it "updates the description" do
         journey = Journey.create! valid_attributes
         put :update, {:id => journey.to_param, :journey => new_attributes}, valid_session
         journey.reload
-        expect(journey.body).to eq(new_attributes[:body])
+        expect(journey.description).to eq(new_attributes[:description])
       end
 
       it "assigns the requested journey as @journey" do
@@ -183,16 +183,16 @@ RSpec.describe JourneysController, :type => :controller do
       end
     end
 
-    describe "with blank body" do
+    describe "with blank description" do
       it "assigns the journey as @journey" do
         journey = Journey.create! valid_attributes
-        put :update, {:id => journey.to_param, :journey => blank_body}, valid_session
+        put :update, {:id => journey.to_param, :journey => blank_description}, valid_session
         expect(assigns(:journey)).to eq(journey)
       end
 
       it "re-renders the 'edit' template" do
         journey = Journey.create! valid_attributes
-        put :update, {:id => journey.to_param, :journey => blank_body}, valid_session
+        put :update, {:id => journey.to_param, :journey => blank_description}, valid_session
         expect(response).to render_template("edit")
       end
     end 
@@ -211,16 +211,16 @@ RSpec.describe JourneysController, :type => :controller do
       end
     end
 
-    describe "with long body" do
+    describe "with long description" do
       it "assigns the journey as @journey" do
         journey = Journey.create! valid_attributes
-        put :update, {:id => journey.to_param, :journey => long_body}, valid_session
+        put :update, {:id => journey.to_param, :journey => long_description}, valid_session
         expect(assigns(:journey)).to eq(journey)
       end
 
       it "re-renders the 'edit' template" do
         journey = Journey.create! valid_attributes
-        put :update, {:id => journey.to_param, :journey => long_body}, valid_session
+        put :update, {:id => journey.to_param, :journey => long_description}, valid_session
         expect(response).to render_template("edit")
       end
     end

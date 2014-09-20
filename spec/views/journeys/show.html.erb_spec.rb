@@ -4,7 +4,7 @@ RSpec.describe "journeys/show", :type => :view do
   before(:each) do
     @journey = assign(:journey, Journey.create!(
       :title => "Title",
-      :body => "MyText"
+      :description => "MyText"
     ))
   end
 

@@ -4,7 +4,7 @@ RSpec.describe "journeys/new", :type => :view do
   before(:each) do
     assign(:journey, Journey.new(
       :title => "MyString",
-      :body => "MyText"
+      :description => "MyText"
     ))
   end
 
@@ -15,7 +15,7 @@ RSpec.describe "journeys/new", :type => :view do
 
       assert_select "input#journey_title[name=?]", "journey[title]"
 
-      assert_select "textarea#journey_body[name=?]", "journey[body]"
+      assert_select "textarea#journey_description[name=?]", "journey[description]"
     end
   end
 end

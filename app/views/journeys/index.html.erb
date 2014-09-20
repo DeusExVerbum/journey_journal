@@ -1,17 +1,21 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Journeys</h1>
+<div class="journey_list">
 <% @journeys.each do |journey| %>
-    <h2><%= journey.title %></h2>
-    <p><%= journey.body %></p>
-    <hr />
-    <ul>
-        <li><%= link_to 'Show', journey %></li>
-        <li><%= link_to 'Edit', edit_journey_path(journey) %></li>
-        <li><%= link_to 'Destroy', journey, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-    </ul>
-    <hr />
+    <div class="journey">
+        <h2 class="title journey_title"><%= journey.title %></h2>
+        <p class="description journey_description"><%= journey.description %></p>
+        <hr />
+        <ul>
+            <li><%= link_to 'Show', journey %></li>
+            <li><%= link_to 'Edit', edit_journey_path(journey) %></li>
+            <li><%= link_to 'Destroy', journey, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+        </ul>
+        <hr />
+    </div>
 <% end %>
+</div>
 
 <br>
 

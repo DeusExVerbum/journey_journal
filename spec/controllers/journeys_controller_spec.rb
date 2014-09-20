@@ -23,7 +23,7 @@ RSpec.describe JourneysController, :type => :controller do
   # This should return the minimal set of attributes required to create a valid
   # Journey. As you add validations to Journey, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { {title: "A valid title", description: "A valid selection of description text"} }
+  let(:valid_attributes) { {title: "A valid title", description: "111A valid selection of description text"} }
 
   let(:blank_title) { {title: "", description: "A valid description"} }
   let(:blank_description) { {title: "A valid title", description: ""} }

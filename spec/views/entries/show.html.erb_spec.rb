@@ -4,7 +4,8 @@ RSpec.describe "entries/show", :type => :view do
   before(:each) do
     @entry = assign(:entry, Entry.create!(
       :title => "Title",
-      :body => "MyText"
+      :body => "MyText",
+      :journey_id => 1
     ))
   end
 
@@ -12,5 +13,6 @@ RSpec.describe "entries/show", :type => :view do
     render
     expect(rendered).to match(/Title/)
     expect(rendered).to match(/MyText/)
+    expect(rendered).to match(/1/)
   end
 end

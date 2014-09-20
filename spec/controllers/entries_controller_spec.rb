@@ -20,16 +20,21 @@ require 'rails_helper'
 
 RSpec.describe EntriesController, :type => :controller do
 
+  before(:each) do
+    @journey = Journey.create!(title: "A valid journey title", description: "A valid journey description")
+  end
+
   # This should return the minimal set of attributes required to create a valid
   # Entry. As you add validations to Entry, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { {title: "A valid title", body: "A valid body"} }
+  let(:valid_attributes) { {title: "A valid title", body: "A valid body", journey_id:@journey.id} }
 
-  let(:blank_title) { {title: "", body: "An invalid body"} }
-  let(:blank_body) { {title: "An invalid title", body: ""} }
+  let(:blank_title) { {title: "", body: "An invalid body", journey_id:@journey.id} }
+  let(:blank_body) { {title: "An invalid title", body: "", journey_id:@journey.id} }
+  let(:blank_journey_id) { {title: "An invalid title", body: ""} }
 
-  let(:long_title) { {title: "a" * 251, body: "A valid body"} }
-  let(:long_body) { {title: "A valid title", body: "a" * 10001} }
+  let(:long_title) { {title: "a" * 251, body: "A valid body", journey_id:@journey.id} }
+  let(:long_body) { {title: "A valid title", body: "a" * 10001, journey_id:@journey.id} }
   #
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in

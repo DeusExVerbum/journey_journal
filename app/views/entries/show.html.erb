@@ -15,5 +15,6 @@
   <%= @entry.journey_id %>
 </p>
 
-<%= link_to 'Edit', edit_entry_path(@entry) %> |
-<%= link_to 'Back', entries_path %>
+<%= link_to 'Edit', edit_journey_entry_path %> |
+<%= link_to 'Journey', journey_path(@entry.journey_id) %> | 
+<%= link_to 'Root', root_path %>

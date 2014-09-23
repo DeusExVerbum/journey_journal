@@ -14,7 +14,8 @@ class EntriesController < ApplicationController
 
   # GET /entries/new
   def new
-    @entry = Entry.new
+    @journey = Journey.find(params[:journey_id])
+    @entry = @journey.entries.new
   end
 
   # GET /entries/1/edit
@@ -24,11 +25,12 @@ class EntriesController < ApplicationController
   # POST /entries
   # POST /entries.json
   def create
+    @journey = Journey.find(params[:journey_id])
     @entry = Entry.new(entry_params)
 
     respond_to do |format|
       if @entry.save
-        format.html { redirect_to @entry, notice: 'Entry was successfully created.' }
+        format.html { redirect_to journey_entry_path(@journey, @entry), notice: 'Entry was successfully created.' }
         format.json { render :show, status: :created, location: @entry }
       else
         format.html { render :new }
@@ -40,10 +42,12 @@ class EntriesController < ApplicationController
   # PATCH/PUT /entries/1
   # PATCH/PUT /entries/1.json
   def update
+    @journey = Journey.find(params[:journey_id])
+
     respond_to do |format|
       if @entry.update(entry_params)
-        format.html { redirect_to @entry, notice: 'Entry was successfully updated.' }
-        format.json { render :show, status: :ok, location: @entry }
+        format.html { redirect_to @journey, notice: 'Entry was successfully updated.' }
+        format.json { render :show, status: :ok, location: @journey }
       else
         format.html { render :edit }
         format.json { render json: @entry.errors, status: :unprocessable_entity }
@@ -54,9 +58,10 @@ class EntriesController < ApplicationController
   # DELETE /entries/1
   # DELETE /entries/1.json
   def destroy
+    @journey = Journey.find(params[:journey_id])
     @entry.destroy
     respond_to do |format|
-      format.html { redirect_to entries_url, notice: 'Entry was successfully destroyed.' }
+      format.html { redirect_to @journey, notice: 'Entry was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

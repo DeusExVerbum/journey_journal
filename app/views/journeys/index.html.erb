@@ -4,13 +4,18 @@
 <div class="journey_list">
 <% @journeys.each do |journey| %>
     <div class="journey">
-        <h2 class="title journey_title"><%= journey.title %></h2>
+        <h2 class="title journey_title"><%= link_to journey.title, journey%></h2>
         <p class="description journey_description"><%= journey.description %></p>
-        <hr />
         <ul>
-            <li><%= link_to 'Show', journey %></li>
             <li><%= link_to 'Edit', edit_journey_path(journey) %></li>
             <li><%= link_to 'Destroy', journey, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+        </ul>
+        <hr />
+        <ul>
+            <% journey.entries.each do |entry| %>
+                <li><%= link_to entry.title, journey_entry_path(journey, entry) %></li>
+            <% end %>
+            <li><%= link_to 'Add Entry', new_journey_entry_path(journey) %></li>
         </ul>
         <hr />
     </div>

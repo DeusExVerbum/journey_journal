@@ -27,7 +27,7 @@ RSpec.describe EntriesController, :type => :controller do
   # This should return the minimal set of attributes required to create a valid
   # Entry. As you add validations to Entry, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { {title: "A valid title", body: "A valid body", journey_id:@journey.id} }
+  let(:valid_attributes) { {title: "A valid title", body: "A valid body", journey_id: @journey.id} }
 
   let(:blank_title) { {title: "", body: "An invalid body", journey_id:@journey.id} }
   let(:blank_body) { {title: "An invalid title", body: "", journey_id:@journey.id} }
@@ -43,31 +43,31 @@ RSpec.describe EntriesController, :type => :controller do
 
   describe "GET index" do
     it "assigns all entries as @entries" do
-      entry = Entry.create! valid_attributes
-      get :index, {}, valid_session
+      entry = @journey.entries.create! valid_attributes
+      get :index, {journey_id: @journey.id}, valid_session
       expect(assigns(:entries)).to eq([entry])
     end
   end
 
   describe "GET show" do
     it "assigns the requested entry as @entry" do
-      entry = Entry.create! valid_attributes
-      get :show, {:id => entry.to_param}, valid_session
+      entry = @journey.entries.create! valid_attributes
+      get :show, {journey_id: @journey.id, :id => entry.to_param}, valid_session
       expect(assigns(:entry)).to eq(entry)
     end
   end
 
   describe "GET new" do
     it "assigns a new entry as @entry" do
-      get :new, {}, valid_session
+      get :new, {journey_id: @journey.id}, valid_session
       expect(assigns(:entry)).to be_a_new(Entry)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested entry as @entry" do
-      entry = Entry.create! valid_attributes
-      get :edit, {:id => entry.to_param}, valid_session
+      entry = @journey.entries.create! valid_attributes
+      get :edit, {journey_id: @journey.id, :id => entry.to_param}, valid_session
       expect(assigns(:entry)).to eq(entry)
     end
   end
@@ -76,66 +76,67 @@ RSpec.describe EntriesController, :type => :controller do
     describe "with valid params" do
       it "creates a new Entry" do
         expect {
-          post :create, {:entry => valid_attributes}, valid_session
+          post :create, {journey_id: @journey.id, :entry => valid_attributes}, valid_session
         }.to change(Entry, :count).by(1)
       end
 
       it "assigns a newly created entry as @entry" do
-        post :create, {:entry => valid_attributes}, valid_session
+        post :create, {journey_id: @journey.id, :entry => valid_attributes}, valid_session
         expect(assigns(:entry)).to be_a(Entry)
         expect(assigns(:entry)).to be_persisted
       end
 
       it "redirects to the created entry" do
-        post :create, {:entry => valid_attributes}, valid_session
-        expect(response).to redirect_to(Entry.last)
+        post :create, {journey_id: @journey.id, :entry => valid_attributes}, valid_session
+        # TODO: There must be a simpler way to specify the following redirect.
+        expect(response).to redirect_to({controller: 'entries', action: 'show', journey_id: @journey.id, id: @journey.entries.last.to_param})
       end
     end
 
     describe "with long title" do
       it "assigns a newly created but unsaved entry as @entry" do
-        post :create, {:entry => long_title}, valid_session
+        post :create, {journey_id: @journey.id, :entry => long_title}, valid_session
         expect(assigns(:entry)).to be_a_new(Entry)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:entry => long_title}, valid_session
+        post :create, {journey_id: @journey.id, :entry => long_title}, valid_session
         expect(response).to render_template("new")
       end
     end
 
     describe "with long body" do
       it "assigns a newly created but unsaved entry as @entry" do
-        post :create, {:entry => long_body}, valid_session
+        post :create, {journey_id: @journey.id, :entry => long_body}, valid_session
         expect(assigns(:entry)).to be_a_new(Entry)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:entry => long_body}, valid_session
+        post :create, {journey_id: @journey.id, :entry => long_body}, valid_session
         expect(response).to render_template("new")
       end
     end
 
     describe "with blank title" do
       it "assigns a newly created but unsaved entry as @entry" do
-        post :create, {:entry => blank_title}, valid_session
+        post :create, {journey_id: @journey.id, :entry => blank_title}, valid_session
         expect(assigns(:entry)).to be_a_new(Entry)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:entry => blank_title}, valid_session
+        post :create, {journey_id: @journey.id, :entry => blank_title}, valid_session
         expect(response).to render_template("new")
       end
     end
 
     describe "with blank body" do
       it "assigns a newly created but unsaved entry as @entry" do
-        post :create, {:entry => blank_body}, valid_session
+        post :create, {journey_id: @journey.id, :entry => blank_body}, valid_session
         expect(assigns(:entry)).to be_a_new(Entry)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:entry => blank_body}, valid_session
+        post :create, {journey_id: @journey.id, :entry => blank_body}, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -148,84 +149,84 @@ RSpec.describe EntriesController, :type => :controller do
       }
 
       it "updates the title" do
-        entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => new_attributes}, valid_session
+        entry = @journey.entries.create! valid_attributes
+        put :update, {journey_id: @journey.id, :id => entry.to_param, :entry => new_attributes}, valid_session
         entry.reload
         expect(entry.title).to eq(new_attributes[:title])
       end
 
       it "updates the body" do
-        entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => new_attributes}, valid_session
+        entry = @journey.entries.create! valid_attributes
+        put :update, {journey_id: @journey.id, :id => entry.to_param, :entry => new_attributes}, valid_session
         entry.reload
         expect(entry.body).to eq(new_attributes[:body])
       end
 
       it "assigns the requested entry as @entry" do
-        entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => valid_attributes}, valid_session
+        entry = @journey.entries.create! valid_attributes
+        put :update, {journey_id: @journey.id, :id => entry.to_param, :entry => valid_attributes}, valid_session
         expect(assigns(:entry)).to eq(entry)
       end
 
-      it "redirects to the entry" do
-        entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => valid_attributes}, valid_session
-        expect(response).to redirect_to(entry)
+      it "redirects its parent journey" do
+        entry = @journey.entries.create! valid_attributes
+        put :update, {journey_id: @journey.id, :id => entry.to_param, :entry => valid_attributes}, valid_session
+        expect(response).to redirect_to(@journey)
       end
     end
 
     describe "with long title" do
       it "assigns the entry as @entry" do
-        entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => long_title}, valid_session
+        entry = @journey.entries.create! valid_attributes
+        put :update, {journey_id: @journey.id, :id => entry.to_param, :entry => long_title}, valid_session
         expect(assigns(:entry)).to eq(entry)
       end
 
       it "re-renders the 'edit' template" do
-        entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => long_title}, valid_session
+        entry = @journey.entries.create! valid_attributes
+        put :update, {journey_id: @journey.id, :id => entry.to_param, :entry => long_title}, valid_session
         expect(response).to render_template("edit")
       end
     end
 
     describe "with long title" do
       it "assigns the entry as @entry" do
-        entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => long_body}, valid_session
+        entry = @journey.entries.create! valid_attributes
+        put :update, {journey_id: @journey.id, :id => entry.to_param, :entry => long_body}, valid_session
         expect(assigns(:entry)).to eq(entry)
       end
 
       it "re-renders the 'edit' template" do
-        entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => long_body}, valid_session
+        entry = @journey.entries.create! valid_attributes
+        put :update, {journey_id: @journey.id, :id => entry.to_param, :entry => long_body}, valid_session
         expect(response).to render_template("edit")
       end
     end
     
     describe "with blank title" do
       it "assigns the entry as @entry" do
-        entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => blank_title}, valid_session
+        entry = @journey.entries.create! valid_attributes
+        put :update, {journey_id: @journey.id, :id => entry.to_param, :entry => blank_title}, valid_session
         expect(assigns(:entry)).to eq(entry)
       end
 
       it "re-renders the 'edit' template" do
-        entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => blank_title}, valid_session
+        entry = @journey.entries.create! valid_attributes
+        put :update, {journey_id: @journey.id, :id => entry.to_param, :entry => blank_title}, valid_session
         expect(response).to render_template("edit")
       end
     end
 
     describe "with blank body" do
       it "assigns the entry as @entry" do
-        entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => blank_body}, valid_session
+        entry = @journey.entries.create! valid_attributes
+        put :update, {journey_id: @journey.id, :id => entry.to_param, :entry => blank_body}, valid_session
         expect(assigns(:entry)).to eq(entry)
       end
 
       it "re-renders the 'edit' template" do
-        entry = Entry.create! valid_attributes
-        put :update, {:id => entry.to_param, :entry => blank_body}, valid_session
+        entry = @journey.entries.create! valid_attributes
+        put :update, {journey_id: @journey.id, :id => entry.to_param, :entry => blank_body}, valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -233,16 +234,16 @@ RSpec.describe EntriesController, :type => :controller do
 
   describe "DELETE destroy" do
     it "destroys the requested entry" do
-      entry = Entry.create! valid_attributes
+      entry = @journey.entries.create! valid_attributes
       expect {
-        delete :destroy, {:id => entry.to_param}, valid_session
-      }.to change(Entry, :count).by(-1)
+        delete :destroy, {journey_id: @journey.id, :id => entry.to_param}, valid_session
+      }.to change(@journey.entries, :count).by(-1)
     end
 
-    it "redirects to the entries list" do
-      entry = Entry.create! valid_attributes
-      delete :destroy, {:id => entry.to_param}, valid_session
-      expect(response).to redirect_to(entries_url)
+    it "redirects to its parent journey" do
+      entry = @journey.entries.create! valid_attributes
+      delete :destroy, {journey_id: @journey.id, :id => entry.to_param}, valid_session
+      expect(response).to redirect_to(@journey)
     end
   end
 

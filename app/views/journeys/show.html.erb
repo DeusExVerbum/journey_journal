@@ -10,5 +10,14 @@
   <%= @journey.description %>
 </p>
 
-<%= link_to 'Edit', edit_journey_path(@journey) %> |
-<%= link_to 'Back', journeys_path %>
+<ul>
+    <% @journey.entries.each do |entry| %>
+        <li><%= link_to entry.title, journey_entry_path(@journey, entry) %></li>
+    <% end %>
+</ul>
+
+</div>
+
+<%= link_to 'Edit', edit_journey_path %> |
+<%= link_to 'Journey', journey_path %> | 
+<%= link_to 'Root', root_path %>

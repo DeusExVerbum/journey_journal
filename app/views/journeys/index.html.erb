@@ -1,27 +1,24 @@
-<p id="notice"><%= notice %></p>
+<h1>Journeys</h1>
+<h2>List of all Journeys for all users</h2>
+<p><%= link_to 'New Journey', new_journey_path %></p>
+<hr />
 
-<h1>Listing Journeys</h1>
 <div class="journey_list">
 <% @journeys.each do |journey| %>
     <div class="journey">
-        <h2 class="title journey_title"><%= link_to journey.title, journey%></h2>
+        <h3 class="title journey_title"><%= link_to journey.title, journey%> <%= link_to '(Edit)', edit_journey_path(journey) %> <%= link_to '(Destroy)', journey, method: :delete, data: { confirm: 'Are you sure?' } %></h3>
         <p class="description journey_description"><%= journey.description %></p>
-        <ul>
-            <li><%= link_to 'Edit', edit_journey_path(journey) %></li>
-            <li><%= link_to 'Destroy', journey, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-        </ul>
-        <hr />
         <ul>
             <% journey.entries.each do |entry| %>
                 <li><%= link_to entry.title, journey_entry_path(journey, entry) %></li>
             <% end %>
-            <li><%= link_to 'Add Entry', new_journey_entry_path(journey) %></li>
+            <% if journey.entries.count > 0 %>
+                <li><%= link_to 'New Entry', new_journey_entry_path(journey) %></li>
+            <% else %>
+                <li><%= link_to 'No Entries. Add one?', new_journey_entry_path(journey) %></li>
+            <% end  %>
         </ul>
-        <hr />
     </div>
 <% end %>
 </div>
 
-<br>
-
-<%= link_to 'New Journey', new_journey_path %>

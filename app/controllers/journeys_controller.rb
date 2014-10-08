@@ -1,5 +1,6 @@
 class JourneysController < ApplicationController
   before_action :set_journey, only: [:show, :edit, :update, :destroy]
+  #before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
 
   # GET /journeys
   # GET /journeys.json

@@ -1,5 +1,6 @@
 class EntriesController < ApplicationController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
+  #before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
 
   # GET /entries
   # GET /entries.json
@@ -58,7 +59,9 @@ class EntriesController < ApplicationController
   # DELETE /entries/1
   # DELETE /entries/1.json
   def destroy
+    @journey = Journey.find(params[:journey_id])
     @entry.destroy
+
     respond_to do |format|
       format.html { redirect_to @journey, notice: 'Entry was successfully destroyed.' }
       format.json { head :no_content }

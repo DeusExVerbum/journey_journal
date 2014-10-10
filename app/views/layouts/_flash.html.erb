@@ -1,0 +1,7 @@
+<% if flash[:notice] or flash[:warning] or flash[:note] or flash[:alert] or flash[:error] %>
+<div class="container">
+  <div class="alerts col-xs-12">
+    <%= flash_messages %>
+  </div>
+</div>
+<% end %>

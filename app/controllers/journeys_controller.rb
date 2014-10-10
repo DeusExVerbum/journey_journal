@@ -1,6 +1,6 @@
 class JourneysController < ApplicationController
   before_action :set_journey, only: [:show, :edit, :update, :destroy]
-  #before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
 
   # GET /journeys
   # GET /journeys.json
@@ -70,6 +70,6 @@ class JourneysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def journey_params
-      params.require(:journey).permit(:title, :description)
+      params.require(:journey).permit(:title, :description, :user_id)
     end
 end

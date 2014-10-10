@@ -7,19 +7,34 @@ RSpec.describe "entries/edit", :type => :view do
       description: "Description"
     ))
 
+    @user = User.create!(
+      email: "asdfasdf@asdfasfd.com",
+      password: "asdfasdf"
+    )
+
     @entry = assign(:entry, @journey.entries.create!(
       :title => "MyString",
-      :body => "MyText"
+      :body => "MyText",
+      user_id: @user.id
     ))
+
   end
 
-  it "renders the edit entry form" do
+  it "renders the login form for unauthenticated user" do
     render
 
-    assert_select "form[action=?][method=?]", edit_journey_entry_path(@journey, @entry), "post" do
+    expect(rendered).to match(/Editing Entry/)
+  end
+
+  it "renders the edit entry form for authenticated user" do
+    sign_in @user
+    render
+
+    assert_select "form[action=?][method=?]", journey_entry_path(@journey, @entry), "post" do
       assert_select "input#entry_title[name=?]", "entry[title]"
       assert_select "textarea#entry_body[name=?]", "entry[body]"
-      assert_select "textarea#entry_journey_id[name=?]", "entry[journey_id]"
+      assert_select "input#entry_journey_id[name=?]", "entry[journey_id]"
+      assert_select "input#entry_user_id[name=?]", "entry[user_id]"
     end
   end
 end

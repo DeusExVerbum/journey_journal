@@ -2,16 +2,26 @@ require 'rails_helper'
 
 RSpec.describe "entries/index", :type => :view do
   before(:each) do
+    @journey = assign(:journey, Journey.create!(
+      :title => "Title",
+      :description => "MyText"
+    ))
+    @user = assign(:user, User.create!(
+      email: "asdfasdf@asdfasfd.com",
+      password: "asdfasdf"
+    ))
     assign(:entries, [
       Entry.create!(
         :title => "Title",
         :body => "MyText",
-        journey_id: 1
+        journey_id: @journey.id,
+        user_id: @user.id
       ),
       Entry.create!(
         :title => "Title",
         :body => "MyText",
-        journey_id: 1
+        journey_id: @journey.id,
+        user_id: @user.id
       )
     ])
   end

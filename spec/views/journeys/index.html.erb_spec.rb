@@ -16,7 +16,7 @@ RSpec.describe "journeys/index", :type => :view do
 
   it "renders a list of journeys" do
     render
-    assert_select "div.journey h2.title", :text => "Title".to_s, :count => 2
+    assert_select "div.journey h3.title", :text => "Title (Edit) (Destroy)".to_s, :count => 2
     assert_select "div.journey p.description", :text => "Description".to_s, :count => 2
   end
 end

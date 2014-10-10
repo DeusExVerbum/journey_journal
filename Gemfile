@@ -9,6 +9,7 @@ gem 'devise',               '3.4.0'
 gem 'jquery-rails',         '3.1.2'
 gem 'turbolinks',           '2.3.0'
 gem 'bootstrap-sass',       '3.2.0.2'
+gem 'autoprefixer-rails',   '~> 3.1.1.20141001'
 gem 'jbuilder',             '2.1.3'
 gem 'rails-html-sanitizer', '1.0'
 gem 'sdoc',                 '0.4.0', group: :doc
@@ -18,7 +19,7 @@ group :development, :test do
   gem 'byebug',      '3.4.0'
   gem 'web-console', '2.0.0.beta3'
   gem 'spring',      '1.1.3'
-  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails', '~> 3.1.0'
 end
 
 group :test do

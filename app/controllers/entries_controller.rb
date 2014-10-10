@@ -1,6 +1,6 @@
 class EntriesController < ApplicationController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
-  #before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
 
   # GET /entries
   # GET /entries.json
@@ -11,6 +11,7 @@ class EntriesController < ApplicationController
   # GET /entries/1
   # GET /entries/1.json
   def show
+    @journey = Journey.find(params[:journey_id])
   end
 
   # GET /entries/new
@@ -21,6 +22,7 @@ class EntriesController < ApplicationController
 
   # GET /entries/1/edit
   def edit
+    @journey = Journey.find(params[:journey_id])
   end
 
   # POST /entries
@@ -76,6 +78,6 @@ class EntriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def entry_params
-      params.require(:entry).permit(:title, :body, :journey_id)
+      params.require(:entry).permit(:title, :body, :journey_id, :user_id)
     end
 end

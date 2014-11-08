@@ -44,4 +44,6 @@ RSpec.configure do |config|
   # Set up Devise helpers
   config.include Devise::TestHelpers, type: :controller
   config.include Devise::TestHelpers, type: :view
+
+  config.include FactoryGirl::Syntax::Methods
 end

@@ -12,7 +12,9 @@ gem 'bootstrap-sass',       '3.2.0.2'
 gem 'autoprefixer-rails',   '~> 3.1.1.20141001'
 gem 'jbuilder',             '2.1.3'
 gem 'rails-html-sanitizer', '1.0'
+gem 'factory_girl_rails',   '4.4.1'
 gem 'sdoc',                 '0.4.0', group: :doc
+
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

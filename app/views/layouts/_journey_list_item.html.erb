@@ -1,0 +1,21 @@
+<div class="journey col-xs-12 col-md-9">
+    <hr />
+    <h4 class="title journey_title"><%= link_to journey.title, journey %></h4>
+    <p class="author journey_author">by <%= User.find(journey.user_id).email %></p>
+    <p class="lead"><%= journey.description %></p>
+    <ul>
+        <% journey.entries.each do |entry| %>
+            <li><%= link_to entry.title, journey_entry_path(journey, entry) %></li>
+            <li>TOBEREMOVED: <%= entry.latitude %>, <%= entry.longitude %></li>
+        <% end %>
+    </ul>
+    <% if journey.entries.count < 0 %>
+        <p>There are currently <strong>no entries</strong> for this Journey.</p>
+    <% end  %>
+</div>
+<div class="col-xs-12 col-md-3">
+    <%= link_to 'Edit', edit_journey_path(journey), class: "btn btn-info" %>
+    <%= link_to 'Destroy', journey, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+    <%= link_to 'Add Entry', new_journey_entry_path(journey), class: "btn btn-success" %>
+</div>
+

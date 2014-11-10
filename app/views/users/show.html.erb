@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<h2><%= @user.email %></h2>
+
+<h3>Map</h3>
+<div id="map-canvas"></div>
+
+
+<h3>Journeys</h3>
+<div class="journey_list">
+<% Journey.where(user_id: @user.id).each do |journey| %>
+    <%= render partial: 'layouts/journey_list_item', locals: {journey: journey} %>
+<% end %>
+</div>

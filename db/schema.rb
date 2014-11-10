@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141010044246) do
+ActiveRecord::Schema.define(version: 20141109011248) do
 
   create_table "entries", force: true do |t|
     t.string   "title"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 20141010044246) do
     t.datetime "updated_at", null: false
     t.integer  "journey_id"
     t.integer  "user_id"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "entries", ["journey_id"], name: "index_entries_on_journey_id"

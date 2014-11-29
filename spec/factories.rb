@@ -25,6 +25,8 @@ FactoryGirl.define do
     journey
     title "The Eiffel Tower"
     body "The tallest thing!"
+    longitude 1.0
+    latitude 1.0
   end
 end
 

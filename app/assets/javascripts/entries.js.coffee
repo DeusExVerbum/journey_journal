@@ -1,3 +1,37 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+
+if navigator.geolocation
+  console.log("Geolocation is supported")
+else
+  console.log("Geolocation is NOT supported")
+  if window.location.pathname.match(/.*entries\/new$/)
+    $('#find_me').hide()
+
+fill_lat_long_fields = ->
+  if window.location.pathname.match(/.*entries\/new$/)
+    geoOptions =
+      enableHighAccuracy: true
+      timeout: 10 * 1000
+
+    geoSuccess = (position) ->
+      startPos = position
+      lat = document.getElementById('entry_latitude').value = startPos.coords.latitude
+      long = document.getElementById('entry_longitude').value = startPos.coords.longitude
+
+    # Handle Geolocation errors
+    geoError = (position) ->
+      console.log("Geolocation error. Error code: " + error.code)
+      # error.code can be:
+      #   0: unknown error
+      #   1: permission denied
+      #   2: position unavailable (error response from location provider)
+      #   3: timed out
+
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions)
+
+$(document).ready ->
+  $('#findMe').click (event) ->
+    fill_lat_long_fields()
+    event.preventDefault()

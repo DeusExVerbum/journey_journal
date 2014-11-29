@@ -24,8 +24,8 @@ journey3 = Journey.create!(title: "Title3", description: "Description", user_id:
 # Entries
 # ------------------------------------------------------------------------------
 puts "Creating Entries"
-journey1.entries.create!(title: "Title 1", body: "Body", journey_id: journey1.id, user_id: user1.id, latitude: -34.392, longitude: 150.649)
-journey1.entries.create!(title: "Title 2", body: "Body", journey_id: journey2.id, user_id: user1.id, latitude: -34.395, longitude: 150.640)
-journey1.entries.create!(title: "Title 3", body: "Body", journey_id: journey3.id, user_id: user1.id, latitude: -34.397, longitude: 150.644)
+journey1.entries.create!(title: "Chico", body: "Body", journey_id: journey1.id, user_id: user1.id, latitude: 39.74, longitude: -121.8356)
+journey1.entries.create!(title: "Oroville", body: "Body", journey_id: journey3.id, user_id: user1.id, latitude: 39.5167, longitude: -121.55)
+journey1.entries.create!(title: "Paradise", body: "Body", journey_id: journey2.id, user_id: user1.id, latitude: 39.7597, longitude: -121.6214)
 
 puts "Done seeding the database!"

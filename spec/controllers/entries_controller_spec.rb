@@ -166,6 +166,90 @@ RSpec.describe EntriesController, :type => :controller do
         expect(response).to render_template("new")
       end
     end
+
+    describe "with blank latitude" do
+      it "assigns a newly created but unsaved entry as @entry" do
+        entry = build_attributes(:entry, longitude: "")
+        post :create, {journey_id: entry["journey_id"], :entry => entry}, valid_session
+        expect(assigns(:entry)).to be_a_new(Entry)
+      end
+
+      it "re-renders the 'new' template" do
+        entry = build_attributes(:entry, latitude: "")
+        post :create, {journey_id: entry["journey_id"], :entry => entry}, valid_session
+        expect(response).to render_template("new")
+      end
+    end
+
+    describe "with low latitude" do
+      it "assigns a newly created but unsaved entry as @entry" do
+        entry = build_attributes(:entry, latitude: -91)
+        post :create, {journey_id: entry["journey_id"], :entry => entry}, valid_session
+        expect(assigns(:entry)).to be_a_new(Entry)
+      end
+
+      it "re-renders the 'new' template" do
+        entry = build_attributes(:entry, latitude: -91)
+        post :create, {journey_id: entry["journey_id"], :entry => entry}, valid_session
+        expect(response).to render_template("new")
+      end
+    end
+
+    describe "with large latitude" do
+      it "assigns a newly created but unsaved entry as @entry" do
+        entry = build_attributes(:entry, latitude: 91)
+        post :create, {journey_id: entry["journey_id"], :entry => entry}, valid_session
+        expect(assigns(:entry)).to be_a_new(Entry)
+      end
+
+      it "re-renders the 'new' template" do
+        entry = build_attributes(:entry, latitude: 91)
+        post :create, {journey_id: entry["journey_id"], :entry => entry}, valid_session
+        expect(response).to render_template("new")
+      end
+    end
+ 
+    describe "with blank longitude" do
+      it "assigns a newly created but unsaved entry as @entry" do
+        entry = build_attributes(:entry, longitude: "")
+        post :create, {journey_id: entry["journey_id"], :entry => entry}, valid_session
+        expect(assigns(:entry)).to be_a_new(Entry)
+      end
+
+      it "re-renders the 'new' template" do
+        entry = build_attributes(:entry, longitude: "")
+        post :create, {journey_id: entry["journey_id"], :entry => entry}, valid_session
+        expect(response).to render_template("new")
+      end
+    end
+
+    describe "with low longitude" do
+      it "assigns a newly created but unsaved entry as @entry" do
+        entry = build_attributes(:entry, longitude: -181)
+        post :create, {journey_id: entry["journey_id"], :entry => entry}, valid_session
+        expect(assigns(:entry)).to be_a_new(Entry)
+      end
+
+      it "re-renders the 'new' template" do
+        entry = build_attributes(:entry, longitude: -181)
+        post :create, {journey_id: entry["journey_id"], :entry => entry}, valid_session
+        expect(response).to render_template("new")
+      end
+    end
+
+    describe "with large longitude" do
+      it "assigns a newly created but unsaved entry as @entry" do
+        entry = build_attributes(:entry, longitude: 181)
+        post :create, {journey_id: entry["journey_id"], :entry => entry}, valid_session
+        expect(assigns(:entry)).to be_a_new(Entry)
+      end
+
+      it "re-renders the 'new' template" do
+        entry = build_attributes(:entry, longitude: 181)
+        post :create, {journey_id: entry["journey_id"], :entry => entry}, valid_session
+        expect(response).to render_template("new")
+      end
+    end
   end
 
   describe "PUT update" do

@@ -19,6 +19,16 @@
     <%= f.label :body %><br>
     <%= f.text_area :body %>
   </div>
+  <div id="latitude_field" class="field">
+    <%= f.label :latitude %> <%= link_to 'Find me', '/assets/entries.js', id: 'findMe' %>
+    <br>
+    <%= f.text_field :latitude %>
+  </div>
+  <div id="longitude_field" class="field">
+    <%= f.label :longitude %><br>
+    <%= f.text_field :longitude %>
+  </div>
+
 
   <%= f.hidden_field :journey_id, value: @journey.id %>
   <%= f.hidden_field :user_id, value: current_user.id %>

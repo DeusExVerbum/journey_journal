@@ -2,11 +2,10 @@
     <hr />
     <h4 class="title journey_title"><%= link_to journey.title, journey %></h4>
     <p class="author journey_author">by <%= User.find(journey.user_id).email %></p>
-    <p class="lead"><%= journey.description %></p>
+    <p><%= journey.description %></p>
     <ul>
         <% journey.entries.each do |entry| %>
             <li><%= link_to entry.title, journey_entry_path(journey, entry) %></li>
-            <li>TOBEREMOVED: <%= entry.latitude %>, <%= entry.longitude %></li>
         <% end %>
     </ul>
     <% if journey.entries.count < 0 %>

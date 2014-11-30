@@ -17,9 +17,9 @@ user1 = User.create!(email: "admin@admin.com", password: "asdfasdf")
 # Journeys
 # ------------------------------------------------------------------------------
 puts "Creating Journeys"
-journey1 = Journey.create!(title: "Title1", description: "Description", user_id: user1.id)
-journey2 = Journey.create!(title: "Title2", description: "Description", user_id: user1.id)
-journey3 = Journey.create!(title: "Title3", description: "Description", user_id: user1.id)
+journey1 = Journey.create!(title: "A Local Escape", description: "We had to get away. There was too much nothingness happening in our small town. The surrounding area was enchanting.", user_id: user1.id)
+journey2 = Journey.create!(title: "European Vacation 2014", description: "Prague, Berlin, Venice, Amsterdam. So many places I've read about, and I've almost caught 'em all!", user_id: user1.id)
+journey3 = Journey.create!(title: "Nights Beneath Stars", description: "A night in Yosemite park.", user_id: user1.id)
 
 # Entries
 # ------------------------------------------------------------------------------

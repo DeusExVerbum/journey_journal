@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @journey.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @journey.description %>
+</p>
+
+<div id="map-canvas"></div>
+
+<ul>
+    <% @journey.entries.each_with_index do |entry, index| %>
+      <li><%= link_to entry.title, journey_entry_path(@journey, entry) %></li>
+      <% if index == 0 %>
+        <%= javascript_tag "setCenter(#{entry.latitude}, #{entry.longitude})" %>
+      <% end %>
+      <%= javascript_tag "addMarker(#{entry.latitude}, #{entry.longitude}, \"#{entry.title}\")" %>
+    <% end %>
+    <li><%= link_to 'Add Entry', new_journey_entry_path(@journey) %></li>
+</ul>
+
+</div>
+
+<%= link_to 'Edit', edit_journey_path(@journey) %> |
+<%= link_to 'Journey', journey_path(@journey) %> | 
+<%= link_to 'Root', root_path %>

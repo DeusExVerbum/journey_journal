@@ -16,9 +16,6 @@ Upcoming Feature List
 
 - Image Uploading
 - Location
-  - lat/long fields in Entries
-  - Google maps
-  - Journey map
   - Account map
   - Entry map (?) (locations from wysiwyg and images)
 - Search
@@ -27,8 +24,10 @@ Upcoming Feature List
   - by date
   - by journey and/or entry title
 - UI/UX improvements
-- User Dashboard
 - Following Users
   - with your journey_journal account
   - with your email address
 - Commenting
+- Home page
+  - Map showing recent Entries
+  - Log in and Sign up form

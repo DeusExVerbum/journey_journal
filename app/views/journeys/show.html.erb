@@ -10,18 +10,19 @@
   <%= @journey.description %>
 </p>
 
-<div id="map-canvas"></div>
+<div id="map"></div>
 
-<ul>
-    <% @journey.entries.each_with_index do |entry, index| %>
-      <li><%= link_to entry.title, journey_entry_path(@journey, entry) %></li>
-      <% if index == 0 %>
-        <%= javascript_tag "setCenter(#{entry.latitude}, #{entry.longitude})" %>
-      <% end %>
-      <%= javascript_tag "addMarker(#{entry.latitude}, #{entry.longitude}, \"#{entry.title}\")" %>
-    <% end %>
-    <li><%= link_to 'Add Entry', new_journey_entry_path(@journey) %></li>
-</ul>
+<% @journey.entries.each_with_index do |entry, index| %>
+  <div id="entry-<%= index %>" class="entry">
+    <h3><%= link_to entry.title, journey_entry_path(@journey, entry) %></h3>
+    <ul style="display: none;">
+      <li class="location"><%= entry.latitude %>,<%= entry.longitude %></li>
+      <li class="title"><%= entry.title %></li>
+      <li class="url"><%= journey_entry_path(@journey, entry) %></li>
+    </ul>
+  </div>
+<% end %>
+<li><%= link_to 'Add Entry', new_journey_entry_path(@journey) %></li>
 
 </div>
 

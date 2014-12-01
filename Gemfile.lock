@@ -34,6 +34,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    acts_as_follower (0.2.1)
     ansi (1.4.3)
     arel (6.0.0.beta1)
     autoprefixer-rails (3.1.1.20141001)
@@ -243,6 +244,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_follower
   autoprefixer-rails (~> 3.1.1.20141001)
   bootstrap-sass (= 3.2.0.2)
   byebug (= 3.4.0)

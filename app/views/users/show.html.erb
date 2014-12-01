@@ -13,3 +13,21 @@
     <%= render partial: 'layouts/journey_list_item', locals: {journey: journey} %>
 <% end %>
 </div>
+
+<div class="col-xs-12">
+  <h3>Following these Journeys</h3>
+  <ul>
+    <%= @user.following_by_type('Journey').each do |f|  %>
+      <li><%= link_to f.title, f %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="col-xs-12">
+  <h3>Following these Users</h3>
+  <ul>
+    <%= @user.following_by_type('User').each do |f|  %>
+      <li><%= link_to f.email, f %>apple</li>
+    <% end %>
+  </ul>
+</div>

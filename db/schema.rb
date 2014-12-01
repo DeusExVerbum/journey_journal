@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141130130451) do
+ActiveRecord::Schema.define(version: 20141201000649) do
 
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
@@ -42,6 +42,19 @@ ActiveRecord::Schema.define(version: 20141130130451) do
 
   add_index "entries", ["journey_id"], name: "index_entries_on_journey_id"
   add_index "entries", ["user_id"], name: "index_entries_on_user_id"
+
+  create_table "follows", force: true do |t|
+    t.integer  "followable_id",                   null: false
+    t.string   "followable_type",                 null: false
+    t.integer  "follower_id",                     null: false
+    t.string   "follower_type",                   null: false
+    t.boolean  "blocked",         default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables"
+  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows"
 
   create_table "journeys", force: true do |t|
     t.string   "title"

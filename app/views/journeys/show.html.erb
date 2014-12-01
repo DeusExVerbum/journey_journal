@@ -5,13 +5,17 @@
   <%= @journey.title %>
 </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @journey.description %>
-</p>
+<p><strong>Description:</strong></p>
+<%= @journey.description.html_safe %>
+
+<br>
+<br>
+<%= render 'shared/follow_user' %>
+<%= render 'shared/follow_journey' %>
+<br>
+<br>
 
 <div id="map"></div>
-
 <% @journey.entries.each_with_index do |entry, index| %>
   <div id="entry-<%= index %>" class="entry">
     <h3><%= link_to entry.title, journey_entry_path(@journey, entry) %></h3>
@@ -22,9 +26,7 @@
     </ul>
   </div>
 <% end %>
-<li><%= link_to 'Add Entry', new_journey_entry_path(@journey) %></li>
-
-</div>
+<p><%= link_to 'Add Entry', new_journey_entry_path(@journey) %></p>
 
 <%= link_to 'Edit', edit_journey_path(@journey) %> |
 <%= link_to 'Journey', journey_path(@journey) %> | 

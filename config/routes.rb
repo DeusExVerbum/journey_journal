@@ -8,7 +8,17 @@ Rails.application.routes.draw do
     resources :entries
   end
 
-  get 'users/:id' => 'users#show'
+  resources :users
+
+  get 'users/:id/follow_journey/:follow_id' => 'users#follow_journey'
+  post 'users/:id/follow_journey/:follow_id' => 'users#follow_journey'
+  get 'users/:id/unfollow_journey/:follow_id' => 'users#unfollow_journey'
+  post 'users/:id/unfollow_journey/:follow_id' => 'users#unfollow_journey'
+
+  get 'users/:id/follow_user/:follow_id' => 'users#follow_user'
+  post 'users/:id/follow_user/:follow_id' => 'users#follow_user'
+  get 'users/:id/unfollow_user/:follow_id' => 'users#unfollow_user'
+  post 'users/:id/unfollow_user/:follow_id' => 'users#unfollow_user'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

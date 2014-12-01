@@ -1,0 +1,15 @@
+<div id="follow-user">
+  <% if user_signed_in? %>
+    <% if current_user.following?(@owner) %>
+      <%= link_to "Unfollow this User",
+        {controller: "users", action: "unfollow_user",
+         id: current_user.id, follow_id: @owner.id}, remote: true %>
+    <% else %>
+      <%= link_to "Follow this User",
+        {controller: "users", action: "follow_user",
+         id: current_user.id, follow_id: @owner.id}, remote: true %>
+    <% end %>
+  <% else %>
+    <p><%= link_to 'Sign In', new_user_session %> to follow this Journey</p>
+  <% end %>
+</div>

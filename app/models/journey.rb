@@ -5,4 +5,6 @@ class Journey < ActiveRecord::Base
   validates :title, presence: true, length: {maximum: 250}
   validates :description, presence: true, length: {maximum: 10000}
   validates :user_id, presence: true, numericality: {only_integer: true, greater_than: 0}
+
+  acts_as_followable
 end

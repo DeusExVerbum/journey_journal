@@ -19,6 +19,9 @@ gem 'sdoc',                 '0.4.0', group: :doc
 gem 'ckeditor',             '4.1.1'
 gem 'paperclip',            '4.2.0'
 
+# Following
+gem 'acts_as_follower'
+
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

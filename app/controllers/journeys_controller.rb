@@ -11,6 +11,7 @@ class JourneysController < ApplicationController
   # GET /journeys/1
   # GET /journeys/1.json
   def show
+    @owner = User.find(@journey.user_id)
   end
 
   # GET /journeys/new

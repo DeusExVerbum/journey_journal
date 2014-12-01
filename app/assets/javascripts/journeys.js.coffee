@@ -9,7 +9,7 @@ callFxnOnPageLoad = (fxn) ->
 getEntries = ->
   $('.entry')
 
-usingNewClassMap = ->
+initJourneyMap = ->
   if window.location.pathname.match(/.*journeys\/[0-9]+$/)
     map = new Map('map')
     map.initialize()
@@ -18,12 +18,12 @@ usingNewClassMap = ->
     entries.each( ->
       loc = $(this).find('.location').text().split(',')
       title = $(this).find('.title').text()
-      url = $(this).find('.url').text()
+      #url = $(this).find('.url').text()
       options =
         lat: loc[0]
         lng: loc[1]
         title: title
-        url: url
+        #url: url
         info: '<p>Extra special information about \'' + title + '\'</p>'
       map.addMarker(options)
     )
@@ -31,4 +31,4 @@ usingNewClassMap = ->
     map.connectMarkers()
     map.autoCenter()
 
-callFxnOnPageLoad(usingNewClassMap)
+callFxnOnPageLoad(initJourneyMap)

@@ -15,6 +15,10 @@ gem 'rails-html-sanitizer', '1.0'
 gem 'factory_girl_rails',   '4.4.1'
 gem 'sdoc',                 '0.4.0', group: :doc
 
+# WYSIWYG
+gem 'ckeditor',             '4.1.1'
+gem 'paperclip',            '4.2.0'
+
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

@@ -2,6 +2,10 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+callFxnOnPageLoad = (fxn) ->
+  $(document).ready(fxn)
+  $(document).on('page:load', fxn)
+
 if navigator.geolocation
   console.log("Geolocation is supported")
 else
@@ -10,7 +14,6 @@ else
     $('#find_me').hide()
 
 fill_lat_long_fields = ->
-  if window.location.pathname.match(/.*entries\/new$/)
     geoOptions =
       enableHighAccuracy: true
       timeout: 10 * 1000
@@ -31,7 +34,33 @@ fill_lat_long_fields = ->
 
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions)
 
-$(document).ready ->
-  $('#findMe').click (event) ->
-    fill_lat_long_fields()
-    event.preventDefault()
+getEntries = ->
+  $('.entry')
+
+initLocationMap = ->
+  if window.location.pathname.match(/.*entries\/new$/)
+    map = new Map('map')
+    map.initialize()
+
+    entries = getEntries()
+    entries.each( ->
+      loc = $(this).find('.location').text().split(',')
+      title = $(this).find('.title').text()
+      options =
+        lat: loc[0]
+        lng: loc[1]
+        title: title
+      map.addMarker(options)
+    )
+    map.connectMarkers()
+    map.autoCenter()
+    map.enableSetLatLngByClick()
+
+initFindMeButton = ->
+  if window.location.pathname.match(/.*entries\/new$/)
+    $('#findMe').click (event) ->
+      fill_lat_long_fields()
+      event.preventDefault()
+
+callFxnOnPageLoad(initLocationMap)
+callFxnOnPageLoad(initFindMeButton)

@@ -15,21 +15,17 @@
     <%= f.label :title %><br>
     <%= f.text_field :title %>
   </div>
+
+  <h2>Location</h2>
+  <div id="map"></div>
+
   <div class="field">
     <%= f.label :body %><br>
-    <%= f.text_area :body %>
-  </div>
-  <div id="latitude_field" class="field">
-    <%= f.label :latitude %> <%= link_to 'Find me', '/assets/entries.js', id: 'findMe' %>
-    <br>
-    <%= f.text_field :latitude %>
-  </div>
-  <div id="longitude_field" class="field">
-    <%= f.label :longitude %><br>
-    <%= f.text_field :longitude %>
+    <%= f.cktext_area :body %>
   </div>
 
-
+  <%= f.hidden_field :latitude %>
+  <%= f.hidden_field :longitude %>
   <%= f.hidden_field :journey_id, value: @journey.id %>
   <%= f.hidden_field :user_id, value: current_user.id %>
 
@@ -37,3 +33,16 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+<div id="other_entries" style="display: none;">
+<% @journey.entries.each_with_index do |entry, index| %>
+  <% if not entry.new_record? %>
+    <div id="entry-<%= index %>" class="entry">
+      <ul>
+        <li class="location"><%= entry.latitude %>,<%= entry.longitude %></li>
+        <li class="title"><%= entry.title %></li>
+      </ul>
+    </div>
+  <% end %>
+<% end %>
+</div>

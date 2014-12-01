@@ -14,12 +14,9 @@ class @Map
     @map = "Uninitialized Map Object"
     @options = 
       center:
-        lat: 1
-        lng: 1
-      zoom: 8
-
-    if navigator.geolocation
-      @geolocationSupported = true
+        lat: 0
+        lng: 0
+      zoom: 1
 
     # Set default dimensions
     @setDimensions('100%', '300px')
@@ -35,16 +32,13 @@ class @Map
       markerOptions.position = loc
     else
       console.error 'ERROR Creating marker: Undefined latitude or longitude.'
+      return
 
     if options.title
       markerOptions.title = options.title
-    else
-      console.error 'ERROR Creating marker: Undefined title.'
 
     if options.url
       markerOptions.url = options.url
-    else
-      console.error 'ERROR Creating marker: Undefined url.'
 
     if options.info
       markerOptions.info = options.info
@@ -53,27 +47,48 @@ class @Map
     marker.setMap(@map)
 
     @markers.push(marker)
-    @addInfoWindow(marker)
+    @setMarkerClickEvent(marker)
 
+  removeMarker: (index) ->
+    if !index
+      console.error 'Cannot removeMarker without an index.'
 
-  addInfoWindow: (marker) ->
-    if marker.info
-      infoWindow = new google.maps.InfoWindow(
-        content: marker.info
-        visible: false
-      )
-
-      # Set up info window
-      google.maps.event.addListener(marker, 'click', () ->
-        if infoWindow.visible == false
-          infoWindow.open(@map, this)
-          infoWindow.visible = true
-        else
-          infoWindow.close()
-          infoWindow.visible = false
-      )
+    # -1 indicates we should remove the last element
+    if index == -1
+      # Hide it from the map
+      @markers[@markers.length - 1].setMap(null)
+      # Remove it
+      @markers = @markers.splice(@markers.length-1, 1)
     else
-      console.error 'ERROR creaing infoWindow: marker object has no property \'info\''
+      # Hide it from the map
+      @markers[index].setMap(null)
+      # Remove it
+      @markers = @markers.splice(index, 1)
+
+  setMarkerClickEvent: (marker) ->
+    if marker.info && marker.url
+      console.error 'ERROR: two onClick events are specified (infoWindow and Link)'
+    else
+      if marker.info
+        infoWindow = new google.maps.InfoWindow(
+          content: marker.info
+          visible: false
+        )
+
+        # Set up info window
+        google.maps.event.addListener(marker, 'click', () ->
+          if infoWindow.visible == false
+            infoWindow.open(@map, this)
+            infoWindow.visible = true
+          else
+            infoWindow.close()
+            infoWindow.visible = false
+        )
+      else if marker.url
+        # Set up on-click event
+        google.maps.event.addListener(marker, 'click', () ->
+          window.location.href = this.url
+        )
 
   connectMarkers: (pathOptions) ->
     if !pathOptions then pathOptions = {}
@@ -88,11 +103,37 @@ class @Map
     if !pathOptions.strokeOpacity then pathOptions.strokeOpacity = 1.0
     if !pathOptions.strokeWeight then pathOptions.strokeWeight = 2
 
-    path = new google.maps.Polyline pathOptions
-    path.setMap(@map)
+    @path = new google.maps.Polyline pathOptions
+    @path.setMap(@map)
+
+  disconnectMarkers: () ->
+    if !@path
+      console.log 'Cannot disconnectMarkers until markers are connected'
+      return
+
+    @path.setMap(null)
 
 
+  enableSetLatLngByClick: () ->
+    _this = @
+    newMarkerSet = false
 
+    google.maps.event.addListener(@map, 'click', (e) ->
+      if !newMarkerSet
+        newMarkerSet = true
+      else
+        _this.removeMarker(-1)
+
+      @panTo e.latLng
+
+      _this.addMarker(
+        lat: e.latLng.k
+        lng: e.latLng.B
+      )
+
+      document.getElementById('entry_latitude').value = e.latLng.k
+      document.getElementById('entry_longitude').value = e.latLng.B
+    )
 
 
 
@@ -108,61 +149,87 @@ class @Map
   initialize: ->
     google.maps.event.addDomListener(window, 'load', @setupMap())
 
+    if navigator.geolocation
+      @geolocationSupported = true
+      @addLocateMeButton(@map)
+
   setCenter: (lat, lng) ->
     @options.center.lat = lat
     @options.center.lng = lng
 
   autoCenter: () ->
+    if @markers.length > 0 
       @map.fitBounds(@markerBounds)
+    else
+      console.error 'Cannot autoCenter map. There are no markers to center on'
 
-  ###
-  showMarkers: () ->
-    coords = new Array()
+  addLocateMeButton: (map) ->
+    if !navigator.geolocation
+      console.error 'Geolocation not supported: Cannot add locateMe button.'
+      return
+    else
+      centerOnUserLocation = () ->
+        geoOptions =
+          enableHighAccuracy: true
+          timeout: 10 * 1000
 
-    for m, i in @markers
-      loc = new google.maps.LatLng(m.lat, m.lng)
-      coords.push loc
+        geoSuccess = (position) ->
+          userLoc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+          map.setCenter(userLoc)
+          map.setZoom(14)
 
-      # Grow the map's boundaries to include each marker
-      @markerBounds.extend(loc)
+        # Handle Geolocation errors
+        geoError = (position) ->
+          # error.code can be:
+          #   0: unknown error
+          #   1: permission denied
+          #   2: position unavailable (error response from location provider)
+          #   3: timed out
+          console.log("Geolocation error. Error code: " + error.code)
 
-      markerOptions =
-        position: loc
-        map: @map
-      if m.title
-        markerOptions.title = i+1 + " | " + m.title
-      if m.url
-        markerOptions.url = m.url
+        navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions)
 
-      marker = new google.maps.Marker(markerOptions)
-      marker.setMap(@map)
+      LocateMeControl = (controlDiv, map) ->
+        controlDiv.style.padding = '5px'
 
-      # Set up on-click event
-      #google.maps.event.addListener(marker, 'click', () ->
-        #window.location.href = this.url
-      #)
+        # Set CSS styles for the DIV containing the control
+        # Setting padding to 5 px will offset the control
+        # from the edge of the map
+        controlDiv.style.padding = '5px'
 
-      info = '<h1>' + m.title + '</h1>'
-      
-      infoWindow = new google.maps.InfoWindow(
-        content: info
-      )
-      
-      # Set up info window
-      google.maps.event.addListener(marker, 'click', () ->
-        infoWindow.open(@map, this)
-      )
+        # Set CSS for the control border
+        controlUI = document.createElement 'div'
+        controlUI.style.backgroundColor = 'white'
+        controlUI.style.borderStyle = 'solid'
+        controlUI.style.borderWidth = '2px'
+        controlUI.style.cursor = 'pointer'
+        controlUI.style.textAlign = 'center'
+        controlUI.title = 'Click to set the map to Home'
+        controlDiv.appendChild controlUI
 
-    path = new google.maps.Polyline(
-      path: coords
-      geodesic: true
-      strokeColor: '#FF0000'
-      strokeOpacity: 1.0
-      strokeWeight: 2
-    )
+        # Set CSS for the control interior
+        controlText = document.createElement 'div'
+        controlText.style.fontFamily = 'Arial,sans-serif'
+        controlText.style.fontSize = '12px'
+        controlText.style.paddingLeft = '4px'
+        controlText.style.paddingRight = '4px'
+        controlText.innerHTML = '<strong>Find Me</strong>'
+        controlUI.appendChild controlText
 
-    path.setMap(@map)
-  ###
+        # Setup the click event listeners: simply set the map to
+        # Chicago
+        google.maps.event.addDomListener(controlUI, 'click', () ->
+          centerOnUserLocation()
+        )
+
+      # Create the DIV to hold the control and
+      # call the HomeControl() constructor passing
+      # in this DIV.
+      lmcDiv = document.createElement 'div'
+      lmc = new LocateMeControl lmcDiv, @map
+
+      lmcDiv.index = 1
+      @map.controls[google.maps.ControlPosition.TOP_RIGHT].push lmcDiv
 
   # DOM methods
   # ---------------------------------------------------------------------------

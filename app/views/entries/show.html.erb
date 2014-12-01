@@ -5,10 +5,8 @@
   <%= @entry.title %>
 </p>
 
-<p>
-  <strong>Body:</strong>
-  <%= @entry.body %>
-</p>
+<p> <strong>Body:</strong> </p>
+  <%= @entry.body.html_safe %>
 
 <p>
   <strong>Journey Id:</strong>

@@ -1,15 +1,17 @@
-<div id="follow-journey">
-  <% if user_signed_in? %>
-    <% if current_user.following?(@journey) %>
-      <%= link_to "Unfollow this Journey",
-        {controller: "users", action: "unfollow_journey",
-         id: current_user.id, follow_id: @journey.id}, remote: true %>
-    <% else %>
-      <%= link_to "Follow this Journey",
-        {controller: "users", action: "follow_journey",
-         id: current_user.id, follow_id: @journey.id}, remote: true %>
+<% if user_signed_in? %>
+  <% unless current_user.id == @journey.user_id %>
+    <div id="follow-journey">
+      <% if current_user.following?(@journey) %>
+        <%= link_to "Unfollow this Journey",
+          {controller: "users", action: "unfollow_journey",
+           id: current_user.id, follow_id: @journey.id}, remote: true %>
+      <% else %>
+        <%= link_to "Follow this Journey",
+          {controller: "users", action: "follow_journey",
+           id: current_user.id, follow_id: @journey.id}, remote: true %>
+      <% end %>
+    </div>
     <% end %>
-  <% else %>
-    <p><%= link_to 'Sign In', new_user_session %> to follow this Journey</p>
-  <% end %>
-</div>
+<% else %>
+  <p><%= link_to 'Sign In', new_user_session_path %> to follow this Journey</p>
+<% end %>

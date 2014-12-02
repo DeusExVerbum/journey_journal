@@ -11,10 +11,22 @@ Chico State University Chico
 
 CSCI 490 - Senior Project
 
-Upcoming Feature List
----------------------
+Version 1.0 Upcoming Feature List
+---------------------------------
 
-- Image Uploading
+- Home page
+  - Map showing recent Entries
+  - Log in and Sign up form
+- Search
+  - By date range
+  - By Location
+- Commenting
+
+
+Version ?.?
+-----------
+
+- Per-Account Image memory (for selecting image through wysiwyg)
 - Location
   - Account map
   - Entry map (?) (locations from wysiwyg and images)
@@ -25,9 +37,5 @@ Upcoming Feature List
   - by journey and/or entry title
 - UI/UX improvements
 - Following Users
-  - with your journey_journal account
   - with your email address
 - Commenting
-- Home page
-  - Map showing recent Entries
-  - Log in and Sign up form

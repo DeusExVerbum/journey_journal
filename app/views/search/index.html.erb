@@ -1,0 +1,16 @@
+<h1>Results</h1>
+<p class="lead">Results for: "<%= params[:query] %>"</p>
+<div id="search_results">
+<% @results.each do |r| %>
+  <div class="search-result row">
+  <% case r.class.name
+  when "User" %>
+    <%= r.email %>
+  <% when "Journey" %>
+    <%= r.title %>
+  <% when "Entry" %>
+    <%= r.title %>
+  <% end %>
+  </div>
+<% end %>
+</div>

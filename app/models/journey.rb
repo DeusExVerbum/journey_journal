@@ -7,4 +7,9 @@ class Journey < ActiveRecord::Base
   validates :user_id, presence: true, numericality: {only_integer: true, greater_than: 0}
 
   acts_as_followable
+
+  searchable do
+    text :title
+    text :description
+  end
 end

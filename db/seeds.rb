@@ -28,4 +28,7 @@ journey1.entries.create!(title: "Chico", body: "Body", journey_id: journey1.id, 
 journey1.entries.create!(title: "Oroville", body: "Body", journey_id: journey3.id, user_id: user1.id, latitude: 39.5167, longitude: -121.55)
 journey1.entries.create!(title: "Paradise", body: "Body", journey_id: journey2.id, user_id: user1.id, latitude: 39.7597, longitude: -121.6214)
 
+journey2.entries.create!(title: "Germany", body: "Body", journey_id: journey2.id, user_id: user1.id, latitude: 52.51, longitude: 13.38)
+
+journey3.entries.create!(title: "Quebec", body: "Body", journey_id: journey3.id, user_id: user1.id, latitude: 46.8167, longitude: -71.2167)
 puts "Done seeding the database!"

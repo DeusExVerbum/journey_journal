@@ -14,6 +14,7 @@ gem 'jbuilder',             '2.1.3'
 gem 'rails-html-sanitizer', '1.0'
 gem 'factory_girl_rails',   '4.4.1'
 gem 'sdoc',                 '0.4.0', group: :doc
+gem 'progress_bar'
 
 # WYSIWYG
 gem 'ckeditor',             '4.1.1'
@@ -22,6 +23,15 @@ gem 'paperclip',            '4.2.0'
 # Following
 gem 'acts_as_follower'
 
+# Search
+gem 'sunspot_rails'
+gem 'sunspot_solr'
+
+# Pagination
+gem 'will_paginate'
+
+# Maps
+gem 'geocoder'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

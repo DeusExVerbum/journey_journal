@@ -27,7 +27,7 @@
   <h3>Following these Users</h3>
   <ul>
     <%= @user.following_by_type('User').each do |f|  %>
-      <li><%= link_to f.email, f %>apple</li>
+      <li><%= link_to f.email, f %></li>
     <% end %>
   </ul>
 </div>

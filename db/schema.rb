@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141201000649) do
+ActiveRecord::Schema.define(version: 20141202052348) do
 
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 20141201000649) do
     t.integer  "user_id"
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "country"
+    t.string   "state"
   end
 
   add_index "entries", ["journey_id"], name: "index_entries_on_journey_id"

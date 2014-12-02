@@ -12,11 +12,146 @@ class @Map
     @markerBounds = new google.maps.LatLngBounds()
     @geolocationSupported = false
     @map = "Uninitialized Map Object"
+    @styledMap = "Uninitialized Map Object"
     @options = 
       center:
         lat: 0
         lng: 0
       zoom: 1
+    @mapStyles =
+      [
+        {
+          featureType: "administrative"
+          elementType: "all"
+          stylers: [visibility: "on"]
+        }
+        {
+          featureType: "administrative"
+          elementType: "geometry.fill"
+          stylers: [color: "#ecf0f1"]
+        }
+        {
+          featureType: "administrative"
+          elementType: "labels.text.fill"
+          stylers: [color: "#444444"]
+        }
+        {
+          featureType: "landscape"
+          elementType: "all"
+          stylers: [
+            {
+              color: "#ecf0f1"
+            }
+            {
+              visibility: "on"
+            }
+          ]
+        }
+        {
+          featureType: "landscape"
+          elementType: "labels.text.fill"
+          stylers: [color: "#444444"]
+        }
+        {
+          featureType: "landscape"
+          elementType: "labels.text.stroke"
+          stylers: [color: "#f2f2f2"]
+        }
+        {
+          featureType: "poi"
+          elementType: "all"
+          stylers: [visibility: "off"]
+        }
+        {
+          featureType: "road"
+          elementType: "all"
+          stylers: [
+            {
+              saturation: -100
+            }
+            {
+              lightness: 45
+            }
+          ]
+        }
+        {
+          featureType: "road"
+          elementType: "labels.text.fill"
+          stylers: [lightness: "-30"]
+        }
+        {
+          featureType: "road.highway"
+          elementType: "all"
+          stylers: [visibility: "simplified"]
+        }
+        {
+          featureType: "road.arterial"
+          elementType: "labels.icon"
+          stylers: [visibility: "off"]
+        }
+        {
+          featureType: "transit"
+          elementType: "all"
+          stylers: [visibility: "off"]
+        }
+        {
+          featureType: "water"
+          elementType: "all"
+          stylers: [
+            {
+              visibility: "on"
+            }
+            {
+              color: "#2980b9"
+            }
+          ]
+        }
+        {
+          featureType: "water"
+          elementType: "labels.text"
+          stylers: [visibility: "on"]
+        }
+        {
+          featureType: "water"
+          elementType: "labels.text.fill"
+          stylers: [
+            {
+              saturation: "0"
+            }
+            {
+              lightness: "0"
+            }
+            {
+              color: "#222222"
+            }
+            {
+              visibility: "simplified"
+            }
+          ]
+        }
+        {
+          featureType: "water"
+          elementType: "labels.text.stroke"
+          stylers: [
+            {
+              weight: "1"
+            }
+            {
+              saturation: "0"
+            }
+            {
+              lightness: "0"
+            }
+            {
+              color: "#f2f2f2"
+            }
+            {
+              visibility: "simplified"
+            }
+          ]
+        }
+      ]
+
 
     # Set default dimensions
     @setDimensions('100%', '300px')
@@ -26,6 +161,15 @@ class @Map
   addMarker: (options) ->
     markerOptions =
       map: @map
+      icon:
+        path: MAP_PIN
+        fillColor: '#E74C3C'
+        fillOpacity: 1
+        strokeColor: ''
+        strokeWeight: 0
+        scale: 1/5
+      label: '<i class="map-icon-parking"></i>'
+
     if options.lat && options.lng
       loc = new google.maps.LatLng(options.lat, options.lng)
       @markerBounds.extend(loc)
@@ -99,7 +243,7 @@ class @Map
     # Set default pathOptions if not overridden
     pathOptions.path = coords
     if !pathOptions.geodesic then pathOptions.geodesic = true
-    if !pathOptions.strokeColor then pathOptions.strokeColor = '#FF0000'
+    if !pathOptions.strokeColor then pathOptions.strokeColor = '#E74C3C'
     if !pathOptions.strokeOpacity then pathOptions.strokeOpacity = 1.0
     if !pathOptions.strokeWeight then pathOptions.strokeWeight = 2
 
@@ -144,8 +288,16 @@ class @Map
 
 
   setupMap: () ->
+    @styledMap = new google.maps.StyledMapType(@mapStyles, {name: "Styled Map"})
+    @options.mapTypeControlOptions = {
+      mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_styles']
+    }
     @map = new google.maps.Map(document.getElementById(@id), @options)
 
+    @map.mapTypes.set('map_style', @styledMap)
+    @map.setMapTypeId('map_style')
+
+    
   initialize: ->
     google.maps.event.addDomListener(window, 'load', @setupMap())
 

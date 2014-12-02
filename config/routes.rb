@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
+
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
@@ -10,15 +11,23 @@ Rails.application.routes.draw do
 
   resources :users
 
-  get 'users/:id/follow_journey/:follow_id' => 'users#follow_journey'
-  post 'users/:id/follow_journey/:follow_id' => 'users#follow_journey'
-  get 'users/:id/unfollow_journey/:follow_id' => 'users#unfollow_journey'
-  post 'users/:id/unfollow_journey/:follow_id' => 'users#unfollow_journey'
+  # ===[ Following ]===========================================================
+  get '/users/:id/follow_journey/:follow_id' => 'users#follow_journey'
+  post '/users/:id/follow_journey/:follow_id' => 'users#follow_journey'
+  get '/users/:id/unfollow_journey/:follow_id' => 'users#unfollow_journey'
+  post '/users/:id/unfollow_journey/:follow_id' => 'users#unfollow_journey'
 
-  get 'users/:id/follow_user/:follow_id' => 'users#follow_user'
-  post 'users/:id/follow_user/:follow_id' => 'users#follow_user'
-  get 'users/:id/unfollow_user/:follow_id' => 'users#unfollow_user'
-  post 'users/:id/unfollow_user/:follow_id' => 'users#unfollow_user'
+  get '/users/:id/follow_user/:follow_id' => 'users#follow_user'
+  post '/users/:id/follow_user/:follow_id' => 'users#follow_user'
+  get '/users/:id/unfollow_user/:follow_id' => 'users#unfollow_user'
+  post '/users/:id/unfollow_user/:follow_id' => 'users#unfollow_user'
+
+  # ===[ Search ]==============================================================
+  get '/search' => 'search#index'
+
+
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

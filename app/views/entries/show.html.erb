@@ -13,6 +13,17 @@
   <%= @entry.journey_id %>
 </p>
 
+<p>
+  <strong>Country:</strong>
+  <%= @entry.country %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @entry.state %>
+</p>
+
+
 <%= link_to 'Edit', [:edit, @journey, @entry] %> |
 <%= button_to 'Delete This Entry', journey_entry_path(@entry.journey_id, @entry), method: :delete, data: {confirm: "Are you sure you want to delete this entry?"} %> |
 <%= link_to 'Journey', journey_path(@entry.journey_id) %> | 

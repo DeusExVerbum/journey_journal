@@ -9,5 +9,5 @@
        id: current_user.id, journey_id: @journey.id}, remote: true %>
   <% end %>
 <% else %>
-  <p><%= link_to 'Sign In', new_user_session %> to follow this Journey</p>
+  <p><%= link_to 'Sign In', new_user_session_path %> to follow this Journey</p>
 <% end %>

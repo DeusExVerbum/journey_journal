@@ -33,6 +33,10 @@ gem 'will_paginate'
 # Maps
 gem 'geocoder'
 
+# Commenting
+gem 'acts_as_commentable_with_threading'
+
+
 group :development, :test do
   gem 'sqlite3',     '1.3.9'
   gem 'byebug',      '3.4.0'

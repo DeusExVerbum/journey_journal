@@ -1,0 +1,9 @@
+<div id="comment_replyform">
+  <%= form_tag comments_path, remote: true do %>
+    <%= label_tag :body, "Body:" %>
+    <%= text_area_tag :body %>
+    <%= hidden_field_tag :entry_id, @entry.id %>
+    <%= hidden_field_tag :parent_comment_id %>
+    <%= submit_tag "Post Comment" %>
+  <% end %>
+</div>

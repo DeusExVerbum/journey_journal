@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     resources :entries
   end
 
+  resources :comments
+
   resources :users
 
   # ===[ Following ]===========================================================
@@ -24,9 +26,6 @@ Rails.application.routes.draw do
 
   # ===[ Search ]==============================================================
   get '/search' => 'search#index'
-
-
-
 
 
   # The priority is based upon order of creation: first created -> highest priority.

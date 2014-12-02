@@ -1,5 +1,5 @@
 class EntriesController < ApplicationController
-  before_action :set_entry, only: [:show, :edit, :update, :destroy]
+  before_action :set_entry, only: [:show, :edit, :update, :destroy, :create_comment]
   before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :create]
 
   # GET /entries
@@ -78,6 +78,6 @@ class EntriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def entry_params
-      params.require(:entry).permit(:title, :body, :journey_id, :user_id, :latitude, :longitude)
+      params.require(:entry).permit(:title, :body, :journey_id, :user_id, :latitude, :longitude, :parent_comment_id)
     end
 end

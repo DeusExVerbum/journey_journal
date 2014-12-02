@@ -11,11 +11,13 @@ class Entry < ActiveRecord::Base
   validates :latitude, presence: true, numericality: {greater_than: -90.0, less_than: 90.0}
   validates :longitude, presence: true, numericality: {greater_than: -180.0, less_than: 180.0}
 
+  # ==[ Search ]================================================================
   searchable do
     text :title
     text :body
   end
 
+  # ==[ Geocoding ]=============================================================
   reverse_geocoded_by :latitude, :longitude do |obj, results|
     if geo = results.first
       obj.country = geo.country
@@ -23,15 +25,10 @@ class Entry < ActiveRecord::Base
     end
   end
 
-  #reverse_geocoded_by :latitude, :longitude,
-      #:address => :country
-
   after_validation :reverse_geocode, if: ->(obj){ 
     not obj.country.present? or obj.country_changed?
   }
 
-  #def reverse_geocode
-    #self.country = 'USA'
-  #end
-  
+  # ==[ Commenting ]============================================================
+  acts_as_commentable
 end

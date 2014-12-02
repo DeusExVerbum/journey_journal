@@ -1,0 +1,46 @@
+<%
+def print_children(comment, depth)
+  # Set div classes
+  classes = "comment depth-#{depth}"
+  if comment.has_children?
+    classes += " comment-has-children"
+  end
+
+  commentHTML = "<div id='comment-#{comment.id}' class='#{classes}'>"
+  commentHTML += "<p class='comment-body'>#{comment.body}</p>"
+  if user_signed_in?
+    #commentHTML += link_to "Reply", "#", remote: true
+    commentHTML += link_to "Reply", "#", class: 'reply-to', id: "reply-to-#{comment.id}", remote: true
+  end
+  commentHTML += "<br>"
+  commentHTML += "<hr>"
+  if comment.has_children?
+    commentHTML += "<div class='comment-child'>"
+    comment.children.each do |child|
+      commentHTML += print_children(child, depth + 1)
+    end
+    commentHTML += "</div>"
+  end
+  commentHTML += "</div>"
+
+  commentHTML
+end
+%>
+<div id="comments">
+  <div id="comment_list">
+    <h2>Comments</h2>
+    <% @entry.root_comments.each do |root| %>
+      <div class="comment comment-root">
+        <%= print_children(root, 1).html_safe %>
+      </div>
+    <% end %>
+  </div>
+
+  <h2>Add Comment</h2>
+  <div id="comment_form-reply_to" style="display: none;">
+    <h3>Replying to</h3>
+    <div id="comment_form-reply_to-body"></div>
+    <%= link_to "Reply", "#", class: 'cancel-reply-to', id: "cancel-reply-to", remote: true %>
+  </div>
+  <%= render 'shared/comment_form' %>
+</div>

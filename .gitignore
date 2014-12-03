@@ -15,5 +15,4 @@
 /log/*.log
 /tmp
 
-/solr/data
-/solr/development
+/solr/*

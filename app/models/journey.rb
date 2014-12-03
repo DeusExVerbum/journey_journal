@@ -11,5 +11,6 @@ class Journey < ActiveRecord::Base
   searchable do
     text :title
     text :description
+    time :created_at
   end
 end

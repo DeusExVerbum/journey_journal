@@ -6,12 +6,28 @@ class JourneysController < ApplicationController
   # GET /journeys.json
   def index
     @journeys = Journey.all
+
+    entries_to_feature = 3
+    entries_to_feature = Entry.count > entries_to_feature ? entries_to_feature : Entry.count
+    journey_count = Entry.count
+    rand_ids = []
+    while rand_ids.count < entries_to_feature do
+      r = rand(1...journey_count)
+      unless rand_ids.include? r
+        rand_ids.push(r)
+      end
+    end
+    @featured_entries = []
+    rand_ids.each do |i|
+      @featured_entries.push(Entry.find(i))
+    end
   end
 
   # GET /journeys/1
   # GET /journeys/1.json
   def show
     @owner = User.find(@journey.user_id)
+    @entries = @journey.entries
   end
 
   # GET /journeys/new

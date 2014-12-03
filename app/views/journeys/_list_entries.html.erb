@@ -1,0 +1,25 @@
+<h2><%= subtitle %></h2>
+<% entries.each_with_index do |entry, index| %>
+  <div class="entry col-xs-12">
+    <% unless show_details == true %>
+      <h3 class="entry_title"><%= index+1 %>. <%= link_to entry.title, [@journey, entry] %></h3>
+    <% else %>
+      <h3 class="entry_title"><%= link_to entry.title, [@journey, entry] %></h3>
+    <% end %>
+    <% if show_details == true %>
+      <% if entry.state != entry.country %>
+        <p><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <%= entry.state %>, <%= entry.country %></p>
+      <% else %>
+        <p><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <%= entry.country %></p>
+      <% end %>
+      <p><span class="glyphicon glyphicon-calendar"></span> <%= entry.created_at.strftime("%A, %B %d") %></p>
+    <% end %>
+
+    <ul class="metadata" style="display: none;">
+      <li class="location"><%= entry.latitude %>,<%= entry.longitude %></li>
+      <li class="title"><%= entry.title %></li>
+      <li class="url"><%= journey_entry_path(@journey, entry) %></li>
+      <li class="index"><%= index+1 %></li>
+    </ul>
+  </div>
+<% end %>

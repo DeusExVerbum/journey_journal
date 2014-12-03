@@ -1,0 +1,11 @@
+<div id="map" class="map"></div>
+<% journey.entries.each do |e| %>
+  <% if entry.id == e.id %>
+    <ul class="entry focus metadata" style="display: none;">
+  <% else %>
+    <ul class="entry metadata" style="display: none;">
+  <% end %>
+    <li class="location"><%= e.latitude %>,<%= e.longitude %></li>
+    <li class="title"><%= e.title %></li>
+  </ul>
+<% end %>

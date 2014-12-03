@@ -1,33 +1,33 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <%= render partial: 'layouts/title_bar', 
+    locals: {obj: @journey, owner: @owner, parent_object: ""} %>
+  <%= link_to 'Add Entry', new_journey_entry_path(@journey), 
+    class: "btn btn-success", 
+    style: "margin: -40px 160px 0 0; float: right; position: relative; z-index: 10;" %>
+  <%= link_to 'Delete this Journey', journey_path(@journey),
+    method: :delete, data: {confirm: "Are you sure you want to delete this entry?"}, 
+    class: "btn btn-danger", 
+    style: "margin-top: -40px; float: right; position: relative; z-index: 10;" %>
+</div>
 
-<p>
-  <strong>Title:</strong>
-  <%= @journey.title %>
-</p>
+<div class="row">
+  <div id="map" class="map"></div>
+</div>
 
-<p><strong>Description:</strong></p>
-<%= @journey.description.html_safe %>
-
-<br>
-<br>
-<%= render 'shared/follow_user' %>
-<%= render 'shared/follow_journey' %>
-<br>
-<br>
-
-<div id="map"></div>
-<% @journey.entries.each_with_index do |entry, index| %>
-  <div id="entry-<%= index %>" class="entry">
-    <h3><%= link_to entry.title, journey_entry_path(@journey, entry) %></h3>
-    <ul style="display: none;">
-      <li class="location"><%= entry.latitude %>,<%= entry.longitude %></li>
-      <li class="title"><%= entry.title %></li>
-      <li class="url"><%= journey_entry_path(@journey, entry) %></li>
-    </ul>
+<div class="row">
+  <div class="col-xs-12 content-lead-in">
+    <p class="lead"><%= @journey.description.html_safe %></p>
   </div>
-<% end %>
-<p><%= link_to 'Add Entry', new_journey_entry_path(@journey) %></p>
+</div>
 
-<%= link_to 'Edit', edit_journey_path(@journey) %> |
-<%= link_to 'Journey', journey_path(@journey) %> | 
-<%= link_to 'Root', root_path %>
+<div class="row">
+  <div id="recententry_list" class="col-xs-12 col-lg-6 entry_list">
+    <%= render partial: 'journeys/list_entries',
+      locals: {show_details: true, subtitle: "Recent Entries", entries: @entries.order(created_at: :desc).limit(3)} %>
+  </div>
+
+  <div id="entry_list" class="col-xs-12 col-lg-6 entry_list">
+    <%= render partial: 'journeys/list_entries',
+      locals: {show_details: false, subtitle: "All Entries", entries: @entries.order(created_at: :asc)} %>
+  </div>
+</div>

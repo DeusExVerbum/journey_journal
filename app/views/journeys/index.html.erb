@@ -1,15 +1,11 @@
-<div class="journey col-xs-12">
-    <h1>Journeys</h1>
-    <p class="lead">List of all Journeys for all users</p>
-    <p><%= link_to 'Add Journey', new_journey_path, class: "btn btn-success" %></p>
-</div>
-
-<!--<div id="map" style="width: 100%; height: 300px;"></div> -->
-<div id="map"></div>
-
-<div class="journey_list">
-<% @journeys.each do |journey| %>
-    <%= render partial: 'layouts/journey_list_item', locals: {journey: journey} %>
+<div id="map" class="special-home-map map"></div>
+<% @featured_entries.each do |entry| %>
+    <ul class="entry metadata" style="display: none;">
+      <li class="location"><%= entry.latitude %>,<%= entry.longitude %></li>
+      <li class="title"><%= entry.title %></li>
+      <li class="url"><%= journey_entry_path(Journey.find(entry.journey_id), entry) %></li>
+      <li class="author"><%= User.find(entry.user_id).username %></li>
+      <li class="author_url"><%= user_path(entry.user_id) %></li>
+      <li class="journey_url"><%= journey_path(entry.journey_id) %></li>
+    </ul>
 <% end %>
-</div>
-

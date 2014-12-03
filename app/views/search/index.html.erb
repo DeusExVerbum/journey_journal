@@ -1,16 +1,33 @@
-<h1>Results</h1>
-<p class="lead">Results for: "<%= params[:query] %>"</p>
-<div id="search_results">
-<% @results.each do |r| %>
-  <div class="search-result row">
-  <% case r.class.name
-  when "User" %>
-    <%= r.email %>
-  <% when "Journey" %>
-    <%= r.title %>
-  <% when "Entry" %>
-    <%= r.title %>
-  <% end %>
+<div class="row">
+  <div class="col-xs-12 title-bar">
+    <h1>Results</h1>
+    <p class="lead">Results for: "<%= params[:query] %>"</p>
   </div>
-<% end %>
+</div>
+
+<div id="search_results" class="search_results row">
+  <div class="col-xs-12">
+    <% @results.each do |r| %>
+      <% case r.class.name
+      when "User" %>
+        <h3><span class="fa fa-user"> <%= link_to r.username, r %></h3>
+      <% when "Journey" %>
+        <h3><%= link_to r.title, r%></h3>
+        <% owner = User.find(r.user_id) %>
+        <ul>
+          <li><span class="fa fa-user fa-fw"></span> <%= link_to owner.username, owner %></li>
+          <li><span class="fa fa-calendar fa-fw"></span>  <%= r.created_at.strftime("%A, %B #{r.created_at.day.ordinalize}, %Y at %H:%M %p") %></li>
+        </ul>
+      <% when "Entry" %>
+        <% journey = Journey.find(r.journey_id) %>
+        <% owner = User.find(r.user_id) %>
+        <h3><%= link_to r.title, [journey, r] %></h3>
+        <p>From the journey: <%= link_to journey.title, journey %></p>
+        <ul>
+          <li><span class="fa fa-user fa-fw"></span> <%= link_to owner.username, owner %></li>
+          <li><span class="fa fa-calendar fa-fw"></span>  <%= r.created_at.strftime("%A, %B #{r.created_at.day.ordinalize}, %Y at %H:%M %p") %></li>
+        </ul>
+      <% end %>
+    <% end %>
+  </div>
 </div>

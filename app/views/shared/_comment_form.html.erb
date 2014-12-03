@@ -1,11 +1,21 @@
-<div id="comment_form">
+<div id="comment_form-reply_to" class="col-xs-12" style="display: none;">
+  <a name="replyform"></a>
+  <div class="panel panel-default">
+    <div id="comment_form-reply_to-heading"class="panel-heading"></div>
+    <div class="panel-body">
+      <div id="comment_form-reply_to-body" class="comment_form-reply_to-body"></div>
+      <%= link_to "Cancel", "#", class: 'cancel-reply-to btn btn-danger', id: "cancel-reply-to", remote: true %>
+    </div>
+  </div>
+</div>
+<div id="comment_form" class="col-xs-12">
+  <h2>Add Comment</h2>
   <% if user_signed_in? %>
     <%= form_tag comments_path, remote: true do %>
-      <%= label_tag :body, "Body:" %>
-      <%= text_area_tag :body %>
+      <%= cktext_area_tag :body, nil %>
       <%= hidden_field_tag :entry_id, @entry.id %>
-      <%= hidden_field_tag :parent_comment_id %>
-      <%= submit_tag "Post Comment" %>
+      <%= hidden_field_tag :parent_comment_id, nil %>
+      <%= submit_tag "Post Comment", class: "btn btn-primary", style: "margin-top: 10px;" %>
     <% end %>
   <% else %>
     <p><%= link_to 'Sign In', new_user_session_path %> to add your voice!</p>

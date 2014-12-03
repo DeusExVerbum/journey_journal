@@ -1,33 +1,60 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <%= render partial: 'layouts/title_bar', 
+    locals: {obj: @user, owner: '', parent_object: ''} %>
+</div>
 
-<h2><%= @user.email %></h2>
-
-<h3>Map</h3>
-<div id="map-canvas"></div>
-
-
-<h3>Journeys</h3>
 <p><%= link_to 'Add Journey', new_journey_path, class: "btn btn-success" %></p>
-<div class="journey_list">
-<% Journey.where(user_id: @user.id).each do |journey| %>
-    <%= render partial: 'layouts/journey_list_item', locals: {journey: journey} %>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="journey_list">
+    <% Journey.where(user_id: @user.id).each do |journey| %>
+        <%= render partial: 'layouts/journey_list_item', locals: {journey: journey} %>
+    <% end %>
+    </div>
+  </div>
+</div>
+
+<% if @user.all_follows.empty? %>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="sub-title with-spacing">
+      <h3>Following</h3>
+    </div>
+    <p>Looks like you're not following anything!</p>
+  </div>
+</div>
+<% else %>
+<div class="row">
+  <div class="col-sm-12 col-lg-6">
+    <div class="sub-title with-spacing">
+      <h3>Following Journeys</h3>
+    </div>
+    <ul>
+      <% journey_follows = @user.following_by_type('Journey') %>
+      <% if journey_follows.empty? %>
+        <p>Looks like you're not following any Journeys!</p>
+      <% else %>
+        <% journey_follows.each do |f|  %>
+          <li><%= link_to f.title, f %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="col-sm-12 col-lg-6">
+    <div class="sub-title with-spacing">
+      <h3>Following Users</h3>
+    </div>
+    <ul>
+      <% user_follows = @user.following_by_type('User') %>
+      <% if user_follows.empty? %>
+        <p>Looks like you're not following anyone!</p>
+      <% else %>
+        <% user_follows.each do |f|  %>
+          <li><%= link_to f.username, f %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
 <% end %>
-</div>
-
-<div class="col-xs-12">
-  <h3>Following these Journeys</h3>
-  <ul>
-    <%= @user.following_by_type('Journey').each do |f|  %>
-      <li><%= link_to f.title, f %></li>
-    <% end %>
-  </ul>
-</div>
-
-<div class="col-xs-12">
-  <h3>Following these Users</h3>
-  <ul>
-    <%= @user.following_by_type('User').each do |f|  %>
-      <li><%= link_to f.email, f %></li>
-    <% end %>
-  </ul>
-</div>

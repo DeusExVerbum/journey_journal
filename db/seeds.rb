@@ -11,7 +11,7 @@ puts "Seeding the database"
 # Users
 # ------------------------------------------------------------------------------
 puts "Creating Users"
-user1 = User.create!(email: "admin@admin.com", password: "asdfasdf")
+user1 = User.create!(username: "admin", email: "admin@admin.com", password: "asdfasdf")
 
 
 # Journeys

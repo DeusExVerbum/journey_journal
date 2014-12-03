@@ -1,0 +1,3 @@
+$('#comment-editform-<%= j (@comment.id.to_s) %>').html("<%= j (render 'shared/comment_editform') %>")
+$('#comment-editform-<%= j (@comment.id.to_s) %>').show()
+addCommentClickEvents()

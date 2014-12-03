@@ -18,6 +18,7 @@ class @Map
         lat: 0
         lng: 0
       zoom: 1
+      disableDefaultUI: true
     @mapStyles =
       [
         {
@@ -154,7 +155,7 @@ class @Map
 
 
     # Set default dimensions
-    @setDimensions('100%', '300px')
+    #@setDimensions('100%', '300px')
 
   # Map methods
   # ---------------------------------------------------------------------------
@@ -186,6 +187,11 @@ class @Map
 
     if options.info
       markerOptions.info = options.info
+
+    # Icon options
+    if options.icon?
+      if options.icon.fillColor?
+        markerOptions.icon.fillColor = options.icon.fillColor
 
     marker = new google.maps.Marker(markerOptions)
     marker.setMap(@map)
@@ -308,6 +314,11 @@ class @Map
   setCenter: (lat, lng) ->
     @options.center.lat = lat
     @options.center.lng = lng
+    loc = new google.maps.LatLng(lat, lng)
+    @map.setCenter(loc)
+
+  setZoom: (zoomLevel) ->
+    @map.setZoom(zoomLevel)
 
   autoCenter: () ->
     if @markers.length > 0 
@@ -351,21 +362,20 @@ class @Map
 
         # Set CSS for the control border
         controlUI = document.createElement 'div'
-        controlUI.style.backgroundColor = 'white'
+        controlUI.style.backgroundColor = '#FFFFFF'
         controlUI.style.borderStyle = 'solid'
-        controlUI.style.borderWidth = '2px'
+        controlUI.style.borderWidth = '1px'
         controlUI.style.cursor = 'pointer'
         controlUI.style.textAlign = 'center'
-        controlUI.title = 'Click to set the map to Home'
+        controlUI.title = 'Click to center the map on your location.'
         controlDiv.appendChild controlUI
 
         # Set CSS for the control interior
         controlText = document.createElement 'div'
-        controlText.style.fontFamily = 'Arial,sans-serif'
-        controlText.style.fontSize = '12px'
-        controlText.style.paddingLeft = '4px'
-        controlText.style.paddingRight = '4px'
-        controlText.innerHTML = '<strong>Find Me</strong>'
+        controlText.style.fontSize = '28px'
+        controlText.style.paddingLeft = '2px'
+        controlText.style.paddingRight = '3px'
+        controlText.innerHTML = '<i class="fa fa-location-arrow"></i>'
         controlUI.appendChild controlText
 
         # Setup the click event listeners: simply set the map to

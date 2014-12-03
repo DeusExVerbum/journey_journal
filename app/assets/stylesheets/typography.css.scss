@@ -1,0 +1,41 @@
+h1, .h1, h1 small, .h1 small,
+h2, .h2, h2 small, .h2 small,
+h3, .h3, h3 small, .h3 small,
+h4, .h4, h4 small, .h4 small,
+h5, .h5, h5 small, .h5 small,
+h6, .h6, h6 small, .h6 small {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  margin: 0.50em 0 0.50em
+}
+
+.map h1, .map .h1,
+.map h2, .map .h2,
+.map h3, .map .h3,
+.map h4, .map .h4,
+.map h5, .map .h5,
+.map h6, .map .h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.sub-title {
+  /*background-color: $blue3;*/
+  /*box-shadow: 0 2px 2px #999;*/
+  /*color: #fff;*/
+  font-weight: 800;
+  color: $blue3;
+}
+
+.sub-title.with-spacing {
+  margin-bottom: 20px;
+}
+
+.sub-title a {
+  /*color: #fff;*/
+}
+
+.btn {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 500;
+}

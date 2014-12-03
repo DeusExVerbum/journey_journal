@@ -20,7 +20,6 @@ Version 1.0 Upcoming Feature List
 - Search
   - By date range
   - By Location
-- Commenting
 
 
 Version ?.?

@@ -11,17 +11,23 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+  <div class="form-group">
+    <div class="field">
+      <%= f.label :title %><br>
+      <%= f.text_field :title, class: "form-control" %>
+    </div>
   </div>
 
-  <h2>Location</h2>
-  <div id="map"></div>
+  <div class="form-group">
+    <p><strong>Location</strong></p>
+    <div id="map"></div>
+  </div>
 
-  <div class="field">
-    <%= f.label :body %><br>
-    <%= f.cktext_area :body %>
+  <div class="form-group">
+    <div class="field">
+      <%= f.label :body %><br>
+      <%= f.cktext_area :body %>
+    </div>
   </div>
 
   <%= f.hidden_field :latitude %>
@@ -30,19 +36,6 @@
   <%= f.hidden_field :user_id, value: current_user.id %>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Save", class: "btn btn-primary" %>
   </div>
 <% end %>
-
-<div id="other_entries" style="display: none;">
-<% @journey.entries.each_with_index do |entry, index| %>
-  <% if not entry.new_record? %>
-    <div id="entry-<%= index %>" class="entry">
-      <ul>
-        <li class="location"><%= entry.latitude %>,<%= entry.longitude %></li>
-        <li class="title"><%= entry.title %></li>
-      </ul>
-    </div>
-  <% end %>
-<% end %>
-</div>

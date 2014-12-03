@@ -6,40 +6,13 @@ callFxnOnPageLoad = (fxn) ->
   $(document).ready(fxn)
   $(document).on('page:load', fxn)
 
-if navigator.geolocation
-  console.log("Geolocation is supported")
-else
-  console.log("Geolocation is NOT supported")
-  if window.location.pathname.match(/.*entries\/new$/)
-    $('#find_me').hide()
-
-fill_lat_long_fields = ->
-    geoOptions =
-      enableHighAccuracy: true
-      timeout: 10 * 1000
-
-    geoSuccess = (position) ->
-      startPos = position
-      lat = document.getElementById('entry_latitude').value = startPos.coords.latitude
-      long = document.getElementById('entry_longitude').value = startPos.coords.longitude
-
-    # Handle Geolocation errors
-    geoError = (position) ->
-      console.log("Geolocation error. Error code: " + error.code)
-      # error.code can be:
-      #   0: unknown error
-      #   1: permission denied
-      #   2: position unavailable (error response from location provider)
-      #   3: timed out
-
-    navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions)
-
 getEntries = ->
   $('.entry')
 
 initLocationMap = ->
   if window.location.pathname.match(/.*entries\/new$/)
     map = new Map('map')
+    map.setDimensions('100%', '300px')
     map.initialize()
 
     entries = getEntries()
@@ -56,11 +29,50 @@ initLocationMap = ->
     map.autoCenter()
     map.enableSetLatLngByClick()
 
-initFindMeButton = ->
-  if window.location.pathname.match(/.*entries\/new$/)
-    $('#findMe').click (event) ->
-      fill_lat_long_fields()
-      event.preventDefault()
+  if window.location.pathname.match(/.*entries\/[0-9]+\/edit$/)
+    console.log 'edit.html.erb map'
+    map = new Map('map')
+    map.setDimensions('100%', '300px')
+    map.initialize()
+
+    entries = getEntries()
+    entries.each( ->
+      loc = $(this).find('.location').text().split(',')
+      title = $(this).find('.title').text()
+      options =
+        lat: loc[0]
+        lng: loc[1]
+        title: title
+      map.addMarker(options)
+    )
+    map.connectMarkers()
+    map.autoCenter()
+    map.enableSetLatLngByClick()
+
+  if window.location.pathname.match(/.*journeys\/[0-9]+\/entries\/[0-9]+$/)
+    map = new Map('map')
+    map.setDimensions('100%', '200px')
+    map.initialize()
+
+    entries = getEntries()
+    entries.each( ->
+      loc = $(this).find('.location').text().split(',')
+      title = $(this).find('.title').text()
+      options =
+        lat: loc[0]
+        lng: loc[1]
+        title: title
+        icon:
+          fillColor: '#2C3E50'
+
+      if $(this).hasClass('focus')
+        options.icon.fillColor = '#E74C3C'
+        map.setCenter(options.lat, options.lng)
+        map.setZoom(16)
+
+      map.addMarker(options)
+    )
+
+    map.connectMarkers({strokeColor: '#2C3E50'})
 
 callFxnOnPageLoad(initLocationMap)
-callFxnOnPageLoad(initFindMeButton)

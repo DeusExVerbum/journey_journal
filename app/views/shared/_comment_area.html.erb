@@ -1,19 +1,53 @@
 <%
 def print_children(comment, depth)
   # Set div classes
-  classes = "comment depth-#{depth}"
+  classes = "comment depth-#{depth} bs-callout bs-callout-primary"
   if comment.has_children?
     classes += " comment-has-children"
   end
 
   commentHTML = "<div id='comment-#{comment.id}' class='#{classes}'>"
-  commentHTML += "<p class='comment-body'>#{comment.body}</p>"
-  if user_signed_in?
-    #commentHTML += link_to "Reply", "#", remote: true
-    commentHTML += link_to "Reply", "#", class: 'reply-to', id: "reply-to-#{comment.id}", remote: true
+
+  # Comment body
+  if comment.status == "deleted"
+    commentHTML += "<div class='comment-body deleted'>"
+    commentHTML += "<p>[deleted]</p>"
+    commentHTML += "</div>"
+  else
+    # Author + Time
+
+    commentHTML += "<p class='comment-metadata'>"
+    author = User.find(comment.user_id)
+    commentHTML += "<span class='glyphicon glyphicon-user'></span> #{link_to author.username, author, class: "comment-author"}"
+    commentHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='glyphicon glyphicon-time'></span> #{comment.created_at.strftime("%A, %B #{comment.created_at.day.ordinalize}, %Y at %H:%M %p")}"
+    commentHTML += "</p>"
+    commentHTML += "<div class='comment-body'>"
+    commentHTML += "#{comment.body}"
+    commentHTML += "</div>"
   end
-  commentHTML += "<br>"
-  commentHTML += "<hr>"
+
+  # Reply/Edit/Delete
+  commentHTML += "<div class='comment-interactions'>"
+  if user_signed_in? and not comment.status == "deleted"
+    unless comment.user_id == current_user.id
+      commentHTML += link_to "Reply", "#replyform",
+        class: 'reply-to', id: "reply-to-#{comment.id}"
+    else
+      if comment.created_at > Time.now - (60 * 15)
+        time_left_to_edit = ((Time.now.utc() - (60 * 15) - comment.created_at).to_i / -60) + 1
+        commentHTML += link_to "Edit (#{time_left_to_edit} minutes remaining)", edit_comment_path(comment),
+          class: 'edit-comment', id: "edit-comment-#{comment.id}",
+          remote: true
+        commentHTML += "<br>"
+      end
+
+      commentHTML += link_to "Delete", comment,
+        method: :delete, data: {confirm: "Are you sure?"},
+        class: 'delete-comment', id: "delete-comment-#{comment.id}", remote: true
+    end
+  end
+  commentHTML += "</div>"
+  commentHTML += "<div id='comment-editform-#{comment.id}' class='comment-editform' style='display: none;'></div>"
   if comment.has_children?
     commentHTML += "<div class='comment-child'>"
     comment.children.each do |child|
@@ -26,21 +60,26 @@ def print_children(comment, depth)
   commentHTML
 end
 %>
-<div id="comments">
+
+<div id="comments" class="row">
   <div id="comment_list">
-    <h2>Comments</h2>
-    <% @entry.root_comments.each do |root| %>
-      <div class="comment comment-root">
-        <%= print_children(root, 1).html_safe %>
-      </div>
-    <% end %>
+    <div class="sub-title col-xs-12">
+      <h2>Comments</h2>
+    </div>
+    <div class="col-xs-12">
+      <% @entry.root_comments.each do |root| %>
+        <div class="comment comment-root">
+          <%= print_children(root, 1).html_safe %>
+        </div>
+      <% end %>
+      <% if @entry.root_comments.empty? %>
+        <p class="lead">No comments yet</p>
+      <% end %>
+    </div>
   </div>
 
-  <h2>Add Comment</h2>
-  <div id="comment_form-reply_to" style="display: none;">
-    <h3>Replying to</h3>
-    <div id="comment_form-reply_to-body"></div>
-    <%= link_to "Reply", "#", class: 'cancel-reply-to', id: "cancel-reply-to", remote: true %>
-  </div>
+
+
+
   <%= render 'shared/comment_form' %>
 </div>

@@ -1,0 +1,33 @@
+<div class="col-xs-12 title-bar">
+  <% unless owner.blank? %>
+    <% if user_signed_in? and current_user.id == owner.id %>
+      <% if parent_object.blank? %>
+        <h1 id="title"><%= obj.title %> <small><%= link_to "(Edit)", [:edit, obj] %></small></h1>
+      <% else %>
+        <h1 id="title"><%= obj.title %> <small><%= link_to "(Edit)", [:edit, parent_object, obj] %></small></h1>
+      <% end %>
+      <p><span class="fa fa-user"></span> <%= link_to "#{owner.username}", owner %></p>
+    <% else %>
+      <h1 id="title"><%= obj.title %></h1>
+      <p><span class="fa fa-user"></span> <%= link_to "#{owner.username}", owner %> (<%= render 'shared/follow_user' %>)</p>
+    <% end %>
+    <% if obj.class.name == "Journey" %>
+      <p><span class="fa fa-calendar"></span> 
+      <% first_entry = obj.entries.order(created_at: :desc).limit(1)[0] %>
+      <% last_entry = obj.entries.order(created_at: :asc).limit(1)[0] %>
+      <% if first_entry.created_at == last_entry.created_at %>
+        <%= first_entry.created_at.strftime("%A, %B #{first_entry.created_at.day.ordinalize}") %>
+      <% else %>
+        <%= first_entry.created_at.strftime("%A, %B #{first_entry.created_at.day.ordinalize}") %> &mdash;
+        <%= last_entry.created_at.strftime("%A, %B #{last_entry.created_at.day.ordinalize}") %>
+      <% end %>
+    </p>
+    <% end %>
+  <% else %>
+    <% if obj.class.name == "User" %>
+      <h1 id="title"><%= obj.username %></h1>
+    <% else %>
+      <h1 id="title"><%= obj.title %></h1>
+    <% end %>
+  <% end %>
+</div>

@@ -12,6 +12,7 @@ class EntriesController < ApplicationController
   # GET /entries/1.json
   def show
     @journey = Journey.find(params[:journey_id])
+    @owner = User.find(@entry.user_id)
   end
 
   # GET /entries/new

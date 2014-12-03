@@ -4,6 +4,9 @@
   <title>JourneyJournal</title>
   <%= render 'layouts/js' %>
 
+  <%= stylesheet_link_tag 'application', '//fonts.googleapis.com/css?family=Gentium+Basic:400,700italic,700,400italic' %>
+  <%= stylesheet_link_tag 'application', '//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,800italic,600italic,700,700italic,800' %>
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'ckeditor/ckeditor.js' %>
@@ -13,16 +16,16 @@
 </head>
 <body>
 
+<!-- New -->
 <%= render 'layouts/header' %>
-<%= render 'layouts/flash' %>
+<%= render 'layouts/content' %>
+<%= render 'layouts/footer' %>
 
-<div class="container">
-  <%= yield %>
-</div>
-
+<!--
 <div class="container">
   <%= debug(params) if Rails.env.development? %>
 </div>
+-->
 
 </body>
 </html>

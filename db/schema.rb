@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141203032831) do
+ActiveRecord::Schema.define(version: 20141212104323) do
 
   create_table "ckeditor_assets", force: true do |t|
     t.string   "data_file_name",               null: false
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20141203032831) do
     t.string   "featured_image_content_type"
     t.integer  "featured_image_file_size"
     t.datetime "featured_image_updated_at"
+    t.string   "city"
   end
 
   add_index "entries", ["journey_id"], name: "index_entries_on_journey_id"

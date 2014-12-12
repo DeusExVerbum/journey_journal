@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     ]
 
   def show
+    @owner = @user
   end
 
   def follow_user

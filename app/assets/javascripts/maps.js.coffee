@@ -166,9 +166,9 @@ class @Map
         path: MAP_PIN
         fillColor: '#E74C3C'
         fillOpacity: 1
-        strokeColor: ''
-        strokeWeight: 0
-        scale: 1/5
+        strokeColor: '#000'
+        strokeWeight: 1
+        scale: 1/4
       label: '<i class="map-icon-parking"></i>'
 
     if options.lat && options.lng
@@ -264,25 +264,23 @@ class @Map
     @path.setMap(null)
 
 
-  enableSetLatLngByClick: () ->
+  enableSetLatLngByClick: (delete_most_recent_marker) ->
     _this = @
-    newMarkerSet = false
 
     google.maps.event.addListener(@map, 'click', (e) ->
-      if !newMarkerSet
-        newMarkerSet = true
-      else
+      if delete_most_recent_marker
         _this.removeMarker(-1)
 
       @panTo e.latLng
 
+      console.log e
       _this.addMarker(
         lat: e.latLng.k
-        lng: e.latLng.B
+        lng: e.latLng.D
       )
 
       document.getElementById('entry_latitude').value = e.latLng.k
-      document.getElementById('entry_longitude').value = e.latLng.B
+      document.getElementById('entry_longitude').value = e.latLng.D
     )
 
 

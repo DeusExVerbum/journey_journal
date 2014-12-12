@@ -1,22 +1,26 @@
 <div class="row">
   <%= render partial: 'layouts/title_bar',
     locals: {obj: @entry, owner: @owner, parent_object: @journey} %>
-  <%= link_to 'Delete This Entry', journey_entry_path(@journey, @entry), 
-    method: :delete, data: {confirm: "Are you sure you want to delete this entry?"}, 
-    class: "btn btn-danger", 
-    style: "margin-top: -40px; float: right; position: relative; z-index: 10;" %>
+  <% if user_signed_in? and current_user.id == @entry.user_id %>
+    <%= link_to 'Delete This Entry', journey_entry_path(@journey, @entry), 
+      method: :delete, data: {confirm: "Are you sure you want to delete this entry?"}, 
+      class: "btn btn-danger", 
+      style: "margin-top: -40px; margin-right: 15px; float: right; position: relative; z-index: 10;" %>
+  <% end %>
 </div>
 
-<div class="row entry-body">
-  <div class="col-sm-12 col-lg-9">
+<div class="row">
+  <div class="col-sm-12 col-lg-9 entry-body">
     <%= @entry.body.html_safe %>
   </div>
   <div class="col-sm-12 col-lg-3">
     <%= render partial: 'entries/widget_entry_metadata',
-      locals: {entry: @entry} %>
+      locals: {entry: @entry, journey: @journey} %>
     <%= render partial: 'entries/widget_entry_map',
       locals: {entry: @entry, journey: @journey} %>
   </div>
 </div>
 
+<%= render partial: 'entries/journey_nav_buttons',
+  locals: {entry: @entry, journey: @journey} %>
 <%= render 'shared/comment_area' %>

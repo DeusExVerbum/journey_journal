@@ -15,6 +15,7 @@ initLocationMap = ->
     map.setDimensions('100%', '300px')
     map.initialize()
 
+    console.log "adding entries"
     entries = getEntries()
     entries.each( ->
       loc = $(this).find('.location').text().split(',')
@@ -27,7 +28,7 @@ initLocationMap = ->
     )
     map.connectMarkers()
     map.autoCenter()
-    map.enableSetLatLngByClick()
+    map.enableSetLatLngByClick(false)
 
   if window.location.pathname.match(/.*entries\/[0-9]+\/edit$/)
     console.log 'edit.html.erb map'
@@ -44,14 +45,15 @@ initLocationMap = ->
         lng: loc[1]
         title: title
       map.addMarker(options)
+      map.setCenter(loc[0], loc[1])
+      map.setZoom(10)
     )
     map.connectMarkers()
-    map.autoCenter()
-    map.enableSetLatLngByClick()
+    map.enableSetLatLngByClick(true)
 
   if window.location.pathname.match(/.*journeys\/[0-9]+\/entries\/[0-9]+$/)
     map = new Map('map')
-    map.setDimensions('100%', '200px')
+    map.setDimensions('100%', '500px')
     map.initialize()
 
     entries = getEntries()
@@ -68,7 +70,7 @@ initLocationMap = ->
       if $(this).hasClass('focus')
         options.icon.fillColor = '#E74C3C'
         map.setCenter(options.lat, options.lng)
-        map.setZoom(16)
+        map.setZoom(9)
 
       map.addMarker(options)
     )

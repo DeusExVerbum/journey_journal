@@ -1,0 +1,10 @@
+<div class="clearfix">
+  <% prev_entry = Entry.where("created_at < ?", entry.created_at).order("created_at DESC").first %>
+  <% next_entry = Entry.where("created_at > ?", entry.created_at).order("created_at").first %>
+  <% if prev_entry %>
+    <%= link_to raw("<span class='glyphicon glyphicon-arrow-left'></span> Previous"), journey_entry_path(journey, prev_entry), class: "btn btn-primary prev-btn" %>
+  <% end %>
+  <% if next_entry %>
+    <%= link_to raw("Next <span class='glyphicon glyphicon-arrow-right'></span>"), journey_entry_path(journey, next_entry), class: "btn btn-primary next-btn" %>
+  <% end %>
+</div>

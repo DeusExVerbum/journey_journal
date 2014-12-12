@@ -1,11 +1,14 @@
 <div class="widget-body">
-  <% journey = Journey.find(entry.journey_id) %>
-  <p>From the Journey:</p>
-  <p><%= link_to journey.title, journey %></p>
+  <%= render partial: 'entries/journey_nav_buttons',
+    locals: {entry: entry, journey: journey} %>
+  <p><span class="glyphicon glyphicon-calendar"></span> <%= entry.created_at.strftime("%A, %B %d") %></p>
+
   <% if entry.state != entry.country %>
-    <p><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <%= entry.state %>, <%= entry.country %></p>
+    <address class="entry-geolocated-address"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <%= entry.city %><br><%= entry.state %><br><%= entry.country %></address>
   <% else %>
     <p><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> <%= entry.country %></p>
   <% end %>
-  <p><span class="glyphicon glyphicon-calendar"></span> <%= entry.created_at.strftime("%A, %B %d") %></p>
+
+  <% journey = Journey.find(entry.journey_id) %>
+  <p>From the Journey:<br><%= link_to journey.title, journey %></p>
 </div>

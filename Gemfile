@@ -49,6 +49,7 @@ group :development, :test do
   gem 'web-console', '2.0.0.beta3'
   gem 'spring',      '1.1.3'
   gem 'rspec-rails', '~> 3.1.0'
+  gem 'seed_dump'
 end
 
 group :test do

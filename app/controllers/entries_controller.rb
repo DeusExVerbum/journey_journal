@@ -50,7 +50,7 @@ class EntriesController < ApplicationController
 
     respond_to do |format|
       if @entry.update(entry_params)
-        format.html { redirect_to @journey, notice: 'Entry was successfully updated.' }
+        format.html { redirect_to journey_entry_path(@journey, @entry), notice: 'Entry was successfully updated.' }
         format.json { render :show, status: :ok, location: @journey }
       else
         format.html { render :edit }

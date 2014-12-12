@@ -1,2 +1,10 @@
 <h1>New Entry</h1>
 <%= render 'form' %>
+<ul class="entry-metadata" style="display: none;">
+<% @journey.entries.each do |e| %>
+  <li><ul class="entry">
+    <li class="location"><%= e.latitude %>,<%= e.longitude %></li>
+    <li class="title"><%= e.title %></li>
+  </ul></li>
+<% end %>
+</ul>

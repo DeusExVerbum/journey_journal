@@ -1,9 +1,11 @@
 <div class="row">
   <%= render partial: 'layouts/title_bar', 
-    locals: {obj: @user, owner: '', parent_object: ''} %>
+    locals: {obj: @user, owner: @user, parent_object: ''} %>
 </div>
 
-<p><%= link_to 'Add Journey', new_journey_path, class: "btn btn-success" %></p>
+<% if user_signed_in? and current_user.id == @user.id %>
+  <p><%= link_to 'Add Journey', new_journey_path, class: "btn btn-success" %></p>
+<% end %>
 <div class="row">
   <div class="col-xs-12">
     <div class="journey_list">

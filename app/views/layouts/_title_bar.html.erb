@@ -8,8 +8,14 @@
       <% end %>
       <p><span class="fa fa-user"></span> <%= link_to "#{owner.username}", owner %></p>
     <% else %>
-      <h1 id="title"><%= obj.title %></h1>
-      <p><span class="fa fa-user"></span> <%= link_to "#{owner.username}", owner %> (<%= render 'shared/follow_user' %>)</p>
+      <% if obj.is_a?(User) %>
+        <h1 id="title"><span class="fa fa-user"></span> <%= obj.username %> (<%= render 'shared/follow_user' %>)</h1>
+      <% elsif obj.is_a?(Journey) %>
+        <h1 id="title"><%= obj.title %> (<%= render 'shared/follow_journey' %>)</h1>
+      <% elsif obj.is_a?(Entry) %>
+        <h1 id="title"><%= obj.title %></h1>
+        <p><span class="fa fa-user"></span> <%= link_to "#{owner.username}", owner %> (<%= render 'shared/follow_user' %>)</p>
+      <% end %>
     <% end %>
     <% if obj.class.name == "Journey" %>
       <p><span class="fa fa-calendar"></span> 

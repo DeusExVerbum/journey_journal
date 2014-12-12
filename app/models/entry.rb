@@ -5,7 +5,7 @@ class Entry < ActiveRecord::Base
   belongs_to :user
 
   validates :title, presence: true, length: {maximum: 250}
-  validates :body, presence: true, length: {maximum: 10000}
+  validates :body, presence: true, length: {maximum: 1000000}
   validates :journey_id, presence: true, numericality: {only_integer: true, greater_than: 0}
   validates :user_id, presence: true, numericality: {only_integer: true, greater_than: 0}
   validates :latitude, presence: true, numericality: {greater_than: -90.0, less_than: 90.0}
@@ -23,11 +23,12 @@ class Entry < ActiveRecord::Base
     if geo = results.first
       obj.country = geo.country
       obj.state = geo.state
+      obj.city = geo.city
     end
   end
 
   after_validation :reverse_geocode, if: ->(obj){ 
-    not obj.country.present? or obj.country_changed?
+    not obj.city.present? or obj.city_changed?
   }
 
   # ==[ Commenting ]============================================================

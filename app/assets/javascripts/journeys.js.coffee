@@ -6,17 +6,13 @@ callFxnOnPageLoad = (fxn) ->
   $(document).ready(fxn)
   $(document).on('page:load', fxn)
 
-getEntries = ->
-  $('.entry')
-
 initJourneyMap = ->
   if window.location.pathname.match(/.*journeys\/[0-9]+$/)
     map = new Map('map')
     map.setDimensions('100%', '500px')
     map.initialize()
 
-    entries = getEntries()
-    entries.each( ->
+    $('#entry_list .entry').each( ->
       loc = $(this).find('.location').text().split(',')
       title = $(this).find('.title').text()
       url = $(this).find('.url').text()
@@ -38,8 +34,7 @@ initJourneyMap = ->
     map.setDimensions('100%', '100%')
     map.initialize()
 
-    entries = getEntries()
-    entries.each( ->
+    $('.entry').each( ->
       loc = $(this).find('.location').text().split(',')
       title = $(this).find('.title').text()
       url = $(this).find('.url').text()

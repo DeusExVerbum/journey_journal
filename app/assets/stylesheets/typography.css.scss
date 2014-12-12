@@ -9,6 +9,20 @@ h6, .h6, h6 small, .h6 small {
   margin: 0.50em 0 0.50em
 }
 
+ul li {
+  list-style-type: disc;
+  margin-bottom: 1em;
+}
+
+.search_results ul li {
+  list-style-type: none;
+  margin-bottom: 0;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
 .map h1, .map .h1,
 .map h2, .map .h2,
 .map h3, .map .h3,

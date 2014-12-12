@@ -1,2 +1,6 @@
 <h1>Editing Entry</h1>
 <%= render 'form' %>
+<ul class="entry metadata" style="display: none;">
+  <li class="location"><%= @entry.latitude %>,<%= @entry.longitude %></li>
+  <li class="title"><%= @entry.title %></li>
+</ul>

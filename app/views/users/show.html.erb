@@ -16,47 +16,49 @@
   </div>
 </div>
 
-<% if @user.all_follows.empty? %>
-<div class="row">
-  <div class="col-sm-12">
-    <div class="sub-title with-spacing">
-      <h3>Following</h3>
+<% if user_signed_in? and current_user.id == @user.id %>
+  <% if @user.all_follows.empty? %>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="sub-title with-spacing">
+        <h3>Following</h3>
+      </div>
+      <p>Looks like you're not following anything!</p>
     </div>
-    <p>Looks like you're not following anything!</p>
   </div>
-</div>
-<% else %>
-<div class="row">
-  <div class="col-sm-12 col-lg-6">
-    <div class="sub-title with-spacing">
-      <h3>Following Journeys</h3>
-    </div>
-    <ul>
-      <% journey_follows = @user.following_by_type('Journey') %>
-      <% if journey_follows.empty? %>
-        <p>Looks like you're not following any Journeys!</p>
-      <% else %>
-        <% journey_follows.each do |f|  %>
-          <li><%= link_to f.title, f %></li>
+  <% else %>
+  <div class="row">
+    <div class="col-sm-12 col-lg-6">
+      <div class="sub-title with-spacing">
+        <h3>Following Journeys</h3>
+      </div>
+      <ul>
+        <% journey_follows = @user.following_by_type('Journey') %>
+        <% if journey_follows.empty? %>
+          <p>Looks like you're not following any Journeys!</p>
+        <% else %>
+          <% journey_follows.each do |f|  %>
+            <li><%= link_to f.title, f %></li>
+          <% end %>
         <% end %>
-      <% end %>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="col-sm-12 col-lg-6">
-    <div class="sub-title with-spacing">
-      <h3>Following Users</h3>
-    </div>
-    <ul>
-      <% user_follows = @user.following_by_type('User') %>
-      <% if user_follows.empty? %>
-        <p>Looks like you're not following anyone!</p>
-      <% else %>
-        <% user_follows.each do |f|  %>
-          <li><%= link_to f.username, f %></li>
+    <div class="col-sm-12 col-lg-6">
+      <div class="sub-title with-spacing">
+        <h3>Following Users</h3>
+      </div>
+      <ul>
+        <% user_follows = @user.following_by_type('User') %>
+        <% if user_follows.empty? %>
+          <p>Looks like you're not following anyone!</p>
+        <% else %>
+          <% user_follows.each do |f|  %>
+            <li><%= link_to f.username, f %></li>
+          <% end %>
         <% end %>
-      <% end %>
-    </ul>
+      </ul>
+    </div>
   </div>
-</div>
+  <% end %>
 <% end %>

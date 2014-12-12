@@ -2,7 +2,11 @@
   <% unless owner.blank? %>
     <% if user_signed_in? and current_user.id == owner.id %>
       <% if parent_object.blank? %>
-        <h1 id="title"><%= obj.title %> <small><%= link_to "(Edit)", [:edit, obj] %></small></h1>
+        <% if obj.is_a?(User) %>
+          <h1 id="title"><span class="fa fa-user"></span> <%= obj.username %></h1>
+        <% else %>
+          <h1 id="title"><%= obj.title %> <small><%= link_to "(Edit)", [:edit, obj] %></small></h1>
+        <% end %>
       <% else %>
         <h1 id="title"><%= obj.title %> <small><%= link_to "(Edit)", [:edit, parent_object, obj] %></small></h1>
       <% end %>

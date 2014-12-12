@@ -91,11 +91,11 @@ CKEDITOR.editorConfig = function( config )
       }
     }
 
-    if (dialogName == 'image') {
-      dialogDefinition.removeContents('advanced')
-      dialogDefinition.removeContents('Link')
-      dialogDefinition.removeContents('info')
-    }
+    //if (dialogName == 'image') {
+      //dialogDefinition.removeContents('advanced')
+      //dialogDefinition.removeContents('Link')
+      //dialogDefinition.removeContents('info')
+    //}
   });
 
   // Toolbar groups configuration.

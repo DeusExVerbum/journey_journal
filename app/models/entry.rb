@@ -15,6 +15,7 @@ class Entry < ActiveRecord::Base
   searchable do
     text :title
     text :body
+    date :created_at
   end
 
   # ==[ Geocoding ]=============================================================

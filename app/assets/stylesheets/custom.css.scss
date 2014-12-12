@@ -1,6 +1,11 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.nospacing {
+  padding: 0;
+  margin: 0;
+}
+
 body {
   padding: 50px 0 0;
   background-color: #fff;
@@ -45,7 +50,7 @@ ul li {
   background-color: transparent;
 }
 
-.nav-searchform {
+.header .nav-searchform {
   padding: 8px;
 }
 

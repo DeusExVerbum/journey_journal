@@ -4,13 +4,13 @@ module ApplicationHelper
     when :success
       "alert-success"
     when :error
-      "alert-error"
+      "alert-danger"
     when :notice
       "alert-info"
     when :alert
       "alert-block"
     else
-      "apples"
+      "alert-block unknown_alert_class"
     end
   end
 

@@ -6,7 +6,6 @@ gem 'sass-rails',           '5.0.0.beta1'
 gem 'uglifier',             '2.5.1'
 gem 'coffee-rails',         '4.0.1'
 gem 'devise',               '3.4.0'
-gem 'jquery-rails',         '3.1.2'
 gem 'turbolinks',           '2.3.0'
 gem 'bootstrap-sass',       '3.2.0.2'
 gem 'autoprefixer-rails',   '~> 3.1.1.20141001'
@@ -15,6 +14,10 @@ gem 'rails-html-sanitizer', '1.0'
 gem 'factory_girl_rails',   '4.4.1'
 gem 'sdoc',                 '0.4.0', group: :doc
 gem 'progress_bar'
+
+# Javascript Libraries
+gem 'jquery-rails',         '3.1.2'
+gem 'jquery-ui-rails',      '5.0.3'
 
 # WYSIWYG
 gem 'ckeditor',             '4.1.1'
